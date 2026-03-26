@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AS Travel Solutions | Cab Service</title>
+    <meta name="description" content="AS Travel Solutions offers reliable outstation cab service, airport transfers, corporate travel, and family tours." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="container topbar-inner">
+        <div class="topbar-item">24x7 Cab Service</div>
+        <div class="topbar-item">
+          <span>Call: +91 9764642991 / +91 9764642921</span>
+          <a class="btn btn-small" href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20with%20AS%20Travel%20Solutions." target="_blank" rel="noreferrer">Book Now</a>
+        </div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="#home" aria-label="AS Travel Solutions">
+          <span class="logo-mark" aria-hidden="true"><img src="assets/as-logo-badge.png" alt="" /></span>
+          <span class="logo-text">
+            <strong>AS Travel Solutions</strong>
+            <em>Cab Service</em>
+          </span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+        <nav id="primary-nav" class="site-nav">
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="services.html">Services</a>
+          <a href="destinations.html">Destinations</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <section id="home" class="hero">
+      <div class="hero-slider" aria-hidden="true">
+        <div class="slide is-active" style="--bg: url('https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1600&q=80');"></div>
+        <div class="slide" style="--bg: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=80');"></div>
+        <div class="slide" style="--bg: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80');"></div>
+      </div>
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <p class="eyebrow">Trusted Cab Partner for Outstation and Local Trips</p>
+          <h1>AS Travel Solutions<br /><span>Cab Service</span></h1>
+          <p>
+            1 Sedan, 2 Ertiga, 2 Innova, and 1 Tempo Traveller available for local, outstation, airport,
+            and corporate trips. Safe, clean, GPS-supported cab service across Maharashtra and beyond.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="./contact.html#enquiry" data-contact-redirect>Call Now</a>
+            <a class="btn btn-outline" href="services.html">View Services</a>
+          </div>
+          <div class="hero-highlights">
+            <div>
+              <span class="highlight-title">Outstation</span>
+              <span class="highlight-sub">One-way and round trips</span>
+            </div>
+            <div>
+              <span class="highlight-title">Airport Transfers</span>
+              <span class="highlight-sub">On-time pickups</span>
+            </div>
+            <div>
+              <span class="highlight-title">Corporate Travel</span>
+              <span class="highlight-sub">Monthly billing</span>
+            </div>
+            <div>
+              <span class="highlight-title">GPS Tracking</span>
+              <span class="highlight-sub">Trip monitoring support</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="booking" class="booking-card">
+          <div class="booking-header">
+            <h2>Book Your Cab</h2>
+            <p>Fill the details to continue your service enquiry on WhatsApp.</p>
+          </div>
+          <div class="booking-tabs" role="tablist">
+            <button class="tab-btn is-active" type="button" data-tab="oneway" role="tab">One Way</button>
+            <button class="tab-btn" type="button" data-tab="outstation" role="tab">Out Station</button>
+            <button class="tab-btn" type="button" data-tab="rental" role="tab">Rental</button>
+          </div>
+          <form class="booking-form is-active" data-tab-panel="oneway">
+            <div class="form-row">
+              <label>From City</label>
+              <input type="text" placeholder="Pune" list="city-options" data-city-field="booking" />
+            </div>
+            <div class="form-row">
+              <label>To City</label>
+              <input type="text" placeholder="Mumbai" list="city-options" />
+            </div>
+            <div class="form-row">
+              <label>Pickup Date</label>
+              <input type="date" />
+            </div>
+            <div class="form-row">
+              <label>Pickup Time</label>
+              <input type="time" />
+            </div>
+            <div class="form-row">
+              <label>Phone</label>
+              <input type="tel" placeholder="+91 98765 43210" />
+            </div>
+            <button class="btn btn-block" type="button" data-whatsapp-form="oneway">Find Cab</button>
+          </form>
+          <form class="booking-form" data-tab-panel="outstation">
+            <div class="form-row">
+              <label>From City</label>
+              <input type="text" placeholder="Pune" list="city-options" data-city-field="booking" />
+            </div>
+            <div class="form-row">
+              <label>Destination</label>
+              <input type="text" placeholder="Goa" list="city-options" />
+            </div>
+            <div class="form-row">
+              <label>Trip Type</label>
+              <select>
+                <option>Round Trip</option>
+                <option>One Way</option>
+                <option>Multi-Day</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Pickup Date</label>
+              <input type="date" />
+            </div>
+            <div class="form-row">
+              <label>Phone</label>
+              <input type="tel" placeholder="+91 98765 43210" />
+            </div>
+            <button class="btn btn-block" type="button" data-whatsapp-form="outstation">Get Quote</button>
+          </form>
+          <form class="booking-form" data-tab-panel="rental">
+            <div class="form-row">
+              <label>City</label>
+              <input type="text" placeholder="Pune" list="city-options" data-city-field="booking" />
+            </div>
+            <div class="form-row">
+              <label>Hours Needed</label>
+              <select>
+                <option>4 Hours</option>
+                <option>6 Hours</option>
+                <option>8 Hours</option>
+                <option>12 Hours</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Pickup Date</label>
+              <input type="date" />
+            </div>
+            <div class="form-row">
+              <label>Phone</label>
+              <input type="tel" placeholder="+91 98765 43210" />
+            </div>
+            <button class="btn btn-block" type="button" data-whatsapp-form="rental">Request Rental</button>
+          </form>
+          <p class="booking-note">
+            Service enquiries open on WhatsApp. Corporate clients can use the
+            <a href="contact.html#enquiry">corporate enquiry form</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section intro">
+      <div class="container intro-grid">
+        <div>
+          <h2>AS Travel Solutions - Comfortable, Safe, and On-Time</h2>
+          <p>
+            We provide reliable cab services for outstation trips, airport transfers, corporate travel,
+            family tours and local rentals. Our professional drivers, clean vehicles, and transparent
+            pricing make every journey stress free.
+          </p>
+          <ul class="checklist">
+            <li>Current fleet: 1 Sedan, 2 Ertiga, 2 Innova, and 1 Tempo Traveller</li>
+            <li>One-way and round trips with flexible scheduling</li>
+            <li>24x7 customer support with GPS-backed travel monitoring</li>
+          </ul>
+        </div>
+        <div class="intro-card">
+          <h3>Service Coverage</h3>
+          <p>
+            Pune, Mumbai, Nashik, Shirdi, Kolhapur, Goa, Sambhajinagar, Ahilyanagar,
+            Solapur, Sangli, Miraj, Karad, Satara, Kokan, Hampi, Bhimashankar, Alibag,
+            Matheran and more.
+          </p>
+          <div class="intro-contact">
+            <div>
+              <span>Book Now</span>
+              <strong>+91 9764642991</strong>
+            </div>
+            <div>
+              <span>Alternate</span>
+              <strong>+91 9764642921</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section offers">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Our Fleet Options</h2>
+          <p>Choose the right vehicle for local rides, airport transfers, outstation bookings, and group travel.</p>
+        </div>
+        <div class="offer-grid">
+          <article class="offer-card">
+            <h3>Sedan</h3>
+            <p class="offer-sub">Ideal for couples, airport runs, and compact city travel.</p>
+            <div class="offer-meta" aria-label="Sedan vehicle details">
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Seating</span>
+                <strong>1 to 3 passengers</strong>
+              </div>
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Best For</span>
+                <strong>City and airport trips</strong>
+              </div>
+            </div>
+            <ul>
+              <li>Best for 1 to 3 passengers</li>
+              <li>Quick WhatsApp service enquiries</li>
+              <li>Suitable for one-way and round trips</li>
+            </ul>
+            <a class="btn btn-outline" href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20Sedan." target="_blank" rel="noreferrer">Book Sedan</a>
+          </article>
+          <article class="offer-card">
+            <h3>Ertiga</h3>
+            <p class="offer-sub">Practical and comfortable for airport and family rides.</p>
+            <div class="offer-meta" aria-label="Ertiga vehicle details">
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Seating</span>
+                <strong>4 to 6 passengers</strong>
+              </div>
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Best For</span>
+                <strong>Family and local rides</strong>
+              </div>
+            </div>
+            <ul>
+              <li>Comfortable MPV seating</li>
+              <li>Affordable outstation and local trips</li>
+              <li>Ideal for small groups with luggage</li>
+            </ul>
+            <a class="btn btn-outline" href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20an%20Ertiga." target="_blank" rel="noreferrer">Book Ertiga</a>
+          </article>
+          <article class="offer-card">
+            <h3>Innova</h3>
+            <p class="offer-sub">Comfortable choice for long-distance family and business rides.</p>
+            <div class="offer-meta" aria-label="Innova vehicle details">
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Seating</span>
+                <strong>4 to 6 passengers</strong>
+              </div>
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Best For</span>
+                <strong>Premium outstation travel</strong>
+              </div>
+            </div>
+            <ul>
+              <li>Spacious seating with luggage space</li>
+              <li>Preferred for premium outstation travel</li>
+              <li>GPS monitoring available on active trips</li>
+            </ul>
+            <a class="btn btn-outline" href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20an%20Innova." target="_blank" rel="noreferrer">Book Innova</a>
+          </article>
+          <article class="offer-card">
+            <h3>Tempo Traveller</h3>
+            <p class="offer-sub">Group-ready option for tours, events, and employee transport.</p>
+            <div class="offer-meta" aria-label="Tempo Traveller vehicle details">
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Seating</span>
+                <strong>9 to 12 passengers</strong>
+              </div>
+              <div class="offer-meta-item">
+                <span class="offer-meta-label">Best For</span>
+                <strong>Tours and group travel</strong>
+              </div>
+            </div>
+            <ul>
+              <li>Ideal for larger groups and packages</li>
+              <li>Great for tours, functions, and corporate outings</li>
+              <li>Handled with advance WhatsApp coordination</li>
+            </ul>
+            <a class="btn btn-outline" href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20Tempo%20Traveller." target="_blank" rel="noreferrer">Book Tempo Traveller</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section services">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Our Services</h2>
+          <p>Choose the cab service you need and we will handle the rest.</p>
+        </div>
+        <div class="service-grid services-grid-six">
+          <article class="service-card">
+            <span class="service-icon">01</span>
+            <h3>Outstation Cab Service</h3>
+            <p>Safe and reliable rides for long-distance travel with flexible plans.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+          <article class="service-card">
+            <span class="service-icon">02</span>
+            <h3>Airport Transfers</h3>
+            <p>On-time pickups and drop-offs to all major airports.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+          <article class="service-card">
+            <span class="service-icon">03</span>
+            <h3>Corporate Travel</h3>
+            <p>Dedicated support and billing for business travel.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+          <article class="service-card">
+            <span class="service-icon">04</span>
+            <h3>Family Tours &amp; Packages</h3>
+            <p>Curated packages for families, groups, and weekend getaways.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+          <article class="service-card">
+            <span class="service-icon">05</span>
+            <h3>One-Way &amp; Round Trips</h3>
+            <p>Choose one-way rides or round trips with custom schedules.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+          <article class="service-card">
+            <span class="service-icon">06</span>
+            <h3>Multi-Day Tours</h3>
+            <p>Multi-day tour packages with experienced drivers.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+          <article class="service-card">
+            <span class="service-icon">07</span>
+            <h3>GPS Tracking</h3>
+            <p>Trip monitoring support for route visibility, timing updates, and safer travel coordination.</p>
+            <a class="service-cta" href="services.html">View Service</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fleet">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Fleet Gallery</h2>
+          <p>Representative vehicle photos and availability for the fleet currently listed on the website.</p>
+        </div>
+        <div class="fleet-grid">
+          <figure class="fleet-card">
+            <div class="fleet-carousel" data-fleet-carousel aria-label="Sedan image gallery">
+              <div class="fleet-carousel-slide is-active">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/9/96/Toyota_Etios_1.5_XS_Sedan_2015.jpg"
+                  alt="Toyota Etios sedan parked outdoors"
+                  loading="lazy"
+                />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Sedan image 2" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Sedan image 3" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Sedan image 4" loading="lazy" />
+              </div>
+              <button class="fleet-carousel-btn fleet-carousel-prev" type="button" aria-label="Show previous Sedan image">
+                &#8249;
+              </button>
+              <button class="fleet-carousel-btn fleet-carousel-next" type="button" aria-label="Show next Sedan image">
+                &#8250;
+              </button>
+              <div class="fleet-carousel-dots" aria-label="Sedan image selection">
+                <button class="fleet-carousel-dot is-active" type="button" aria-label="Show Sedan image 1" aria-pressed="true"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Sedan image 2" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Sedan image 3" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Sedan image 4" aria-pressed="false"></button>
+              </div>
+            </div>
+            <figcaption>
+              <h3>Sedan</h3>
+              <span class="fleet-count">1 vehicle</span>
+              <p>Comfortable for 1 to 3 passengers with luggage.</p>
+            </figcaption>
+          </figure>
+          <figure class="fleet-card">
+            <div class="fleet-carousel" data-fleet-carousel aria-label="Ertiga image gallery">
+              <div class="fleet-carousel-slide is-active">
+                <img
+                  src="assets/ertiga-front-three-quarter.png"
+                  alt="White Maruti Suzuki Ertiga shown from the front three-quarter angle"
+                  loading="lazy"
+                />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/ertiga-front-view.png" alt="White Maruti Suzuki Ertiga front view" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/ertiga-rear-view.png" alt="White Maruti Suzuki Ertiga rear view" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img
+                  src="assets/ertiga-rear-three-quarter.png"
+                  alt="White Maruti Suzuki Ertiga shown from the rear three-quarter angle"
+                  loading="lazy"
+                />
+              </div>
+              <button class="fleet-carousel-btn fleet-carousel-prev" type="button" aria-label="Show previous Ertiga image">
+                &#8249;
+              </button>
+              <button class="fleet-carousel-btn fleet-carousel-next" type="button" aria-label="Show next Ertiga image">
+                &#8250;
+              </button>
+              <div class="fleet-carousel-dots" aria-label="Ertiga image selection">
+                <button class="fleet-carousel-dot is-active" type="button" aria-label="Show Ertiga image 1" aria-pressed="true"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Ertiga image 2" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Ertiga image 3" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Ertiga image 4" aria-pressed="false"></button>
+              </div>
+            </div>
+            <figcaption>
+              <h3>Ertiga</h3>
+              <span class="fleet-count">2 vehicles</span>
+              <p>Great for small families, airport transfers, and extra luggage space.</p>
+            </figcaption>
+          </figure>
+          <figure class="fleet-card">
+            <div class="fleet-carousel" data-fleet-carousel aria-label="Innova image gallery">
+              <div class="fleet-carousel-slide is-active">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Innova image 1" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Innova image 2" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Innova image 3" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Innova image 4" loading="lazy" />
+              </div>
+              <button class="fleet-carousel-btn fleet-carousel-prev" type="button" aria-label="Show previous Innova image">
+                &#8249;
+              </button>
+              <button class="fleet-carousel-btn fleet-carousel-next" type="button" aria-label="Show next Innova image">
+                &#8250;
+              </button>
+              <div class="fleet-carousel-dots" aria-label="Innova image selection">
+                <button class="fleet-carousel-dot is-active" type="button" aria-label="Show Innova image 1" aria-pressed="true"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Innova image 2" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Innova image 3" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Innova image 4" aria-pressed="false"></button>
+              </div>
+            </div>
+            <figcaption>
+              <h3>Innova</h3>
+              <span class="fleet-count">2 vehicles</span>
+              <p>Premium comfort for long-distance journeys and corporate travel.</p>
+            </figcaption>
+          </figure>
+          <figure class="fleet-card">
+            <div class="fleet-carousel" data-fleet-carousel aria-label="Tempo Traveller image gallery">
+              <div class="fleet-carousel-slide is-active">
+                <img
+                  src="https://www.forcemotors.com/wp-content/uploads/2025/02/traveller-bg.jpg.webp"
+                  alt="Force Tempo Traveller for group tours"
+                  loading="lazy"
+                />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Tempo Traveller image 2" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Tempo Traveller image 3" loading="lazy" />
+              </div>
+              <div class="fleet-carousel-slide">
+                <img src="assets/fleet-placeholder.svg" alt="Placeholder for Tempo Traveller image 4" loading="lazy" />
+              </div>
+              <button class="fleet-carousel-btn fleet-carousel-prev" type="button" aria-label="Show previous Tempo Traveller image">
+                &#8249;
+              </button>
+              <button class="fleet-carousel-btn fleet-carousel-next" type="button" aria-label="Show next Tempo Traveller image">
+                &#8250;
+              </button>
+              <div class="fleet-carousel-dots" aria-label="Tempo Traveller image selection">
+                <button class="fleet-carousel-dot is-active" type="button" aria-label="Show Tempo Traveller image 1" aria-pressed="true"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Tempo Traveller image 2" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Tempo Traveller image 3" aria-pressed="false"></button>
+                <button class="fleet-carousel-dot" type="button" aria-label="Show Tempo Traveller image 4" aria-pressed="false"></button>
+              </div>
+            </div>
+            <figcaption>
+              <h3>Tempo Traveller</h3>
+              <span class="fleet-count">1 vehicle</span>
+              <p>Perfect for groups, tours, and corporate outings.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section ride-options">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Daily Pune - Mumbai &amp; Airport Services</h2>
+          <p>Quick options for daily cab travel, airport transfers, route search, and instant booking.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="ride-card-head">
+              <span class="service-icon">PM</span>
+              <span class="ride-badge">Daily Route</span>
+            </div>
+            <h3>Daily Pune - Mumbai Cab Service</h3>
+            <p>Regular cab availability for one-way, return, and same-day Pune to Mumbai travel.</p>
+            <ul class="ride-points">
+              <li>Daily service with flexible pickup timing</li>
+              <li>Sedan, Ertiga, and Innova options</li>
+              <li>Ideal for business, family, and weekend travel</li>
+            </ul>
+            <a
+              class="ride-link"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20daily%20Pune%20to%20Mumbai%20cab."
+              target="_blank"
+              rel="noreferrer"
+              >Book Pune - Mumbai</a
+            >
+          </article>
+          <article class="service-card">
+            <div class="ride-card-head">
+              <span class="service-icon">AP</span>
+              <span class="ride-badge">Airport</span>
+            </div>
+            <h3>Airport Transfers</h3>
+            <p>Daily airport pick-up and drop service with reliable drivers and punctual arrivals.</p>
+            <ul class="ride-points">
+              <li>Sedan and Ertiga available every day</li>
+              <li>Suitable for Pune, Mumbai, and nearby airports</li>
+              <li>Fast booking for pick-up and drop requests</li>
+            </ul>
+            <a
+              class="ride-link"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20an%20airport%20transfer."
+              target="_blank"
+              rel="noreferrer"
+              >Book Airport Ride</a
+            >
+          </article>
+          <article class="service-card">
+            <div class="ride-card-head">
+              <span class="service-icon">QS</span>
+              <span class="ride-badge">Search</span>
+            </div>
+            <h3>Daily Pune - Mumbai Cab Search</h3>
+            <p>Open the booking form quickly for the most requested Pune and Mumbai route searches.</p>
+            <div class="ride-quick-actions">
+              <a class="ride-chip" href="#booking" data-booking-target="outstation">Pune to Mumbai</a>
+              <a class="ride-chip" href="#booking" data-booking-target="outstation">Mumbai to Pune</a>
+            </div>
+            <a class="ride-link" href="#booking" data-booking-target="outstation">Search Cab</a>
+          </article>
+          <article class="service-card">
+            <div class="ride-card-head">
+              <span class="service-icon">AQ</span>
+              <span class="ride-badge">Quick Select</span>
+            </div>
+            <h3>Airport Quick Selection</h3>
+            <p>Jump directly to the booking area and start an airport pickup or drop request in one tap.</p>
+            <div class="ride-quick-actions">
+              <a class="ride-chip" href="#booking" data-booking-target="oneway">Pune Airport</a>
+              <a class="ride-chip" href="#booking" data-booking-target="oneway">Mumbai Airport</a>
+            </div>
+            <a class="ride-link" href="#booking" data-booking-target="oneway">Quick Select Airport</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section city-selector-section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Choose Your City</h2>
+          <p>Select a city icon to pre-fill your booking request and jump into the enquiry flow faster.</p>
+        </div>
+        <div class="city-grid" aria-label="City selection icons">
+          <button class="city-option" type="button" data-city-select="Pune" data-booking-target="oneway">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Entrance_to_Shaniwar_wada.jpg/1280px-Entrance_to_Shaniwar_wada.jpg'); --city-image-size: 142%; --city-image-position: 50% 58%; --city-image-filter: saturate(1.05) contrast(1.08) brightness(1.08); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Pune</strong><small>Local and outstation</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Mumbai" data-booking-target="oneway">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Hotel_The_Taj_Mahal_Palace.jpg/1280px-Hotel_The_Taj_Mahal_Palace.jpg'); --city-image-size: 148%; --city-image-position: 52% 42%; --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Mumbai</strong><small>Airport and business</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Nashik" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Trimbak_nashik.jpg/1280px-Trimbak_nashik.jpg'); --city-image-size: 150%; --city-image-position: 54% 48%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.06); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Nashik</strong><small>Pilgrimage and wine routes</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Shirdi" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Sri_Sai_Baba_Temple_%2C_Shirdi.jpg/1280px-Sri_Sai_Baba_Temple_%2C_Shirdi.jpg'); --city-image-size: 154%; --city-image-position: 50% 34%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.08); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Shirdi</strong><small>Temple visits</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Shanishingnapur" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Shani_Temple_at_Shani_Shingnapur%2C_Maharastra%2C_India.jpg/1280px-Shani_Temple_at_Shani_Shingnapur%2C_Maharastra%2C_India.jpg'); --city-image-size: 154%; --city-image-position: 66% 46%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.04); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Shanishingnapur</strong><small>Temple day trips</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Goa" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/BeachFun.jpg/500px-BeachFun.jpg');"
+              ></span
+            >
+            <span class="city-copy"><strong>Goa</strong><small>Holiday trips</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Kolhapur" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Mahalaxmi_Temple%2C_Kolhapur.jpg?width=1280'); --city-image-size: 158%; --city-image-position: 52% 34%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.06); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Kolhapur</strong><small>Family routes</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Sambhajinagar" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Bibi_Ka_Maqbara_-_The_Taj_Of_Deccan.jpg/500px-Bibi_Ka_Maqbara_-_The_Taj_Of_Deccan.jpg');"
+              ></span
+            >
+            <span class="city-copy"><strong>Sambhajinagar</strong><small>Heritage travel</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Solapur" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Siddheshwar_Mandir_Solapur_2024.jpg?width=1280'); --city-image-size: 154%; --city-image-position: 50% 36%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.06); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Solapur</strong><small>Business routes</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Lonavala" data-booking-target="rental">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lonavala_Hills.jpg/960px-Lonavala_Hills.jpg');"
+              ></span
+            >
+            <span class="city-copy"><strong>Lonavala</strong><small>Weekend escapes</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Mahabaleshwar" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Landscape_mahabaleshwar.jpg/960px-Landscape_mahabaleshwar.jpg');"
+              ></span
+            >
+            <span class="city-copy"><strong>Mahabaleshwar</strong><small>Hill station rides</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Kokan" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Beach_in_Ratnagiri.jpg/1280px-Beach_in_Ratnagiri.jpg'); --city-image-size: 148%; --city-image-position: 58% 62%; --city-image-filter: saturate(1.08) contrast(1.06) brightness(1.05); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Kokan</strong><small>Coastal getaways</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Hampi" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Temple_in_Hampi.jpg/1280px-Temple_in_Hampi.jpg'); --city-image-size: 152%; --city-image-position: 50% 48%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.06); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Hampi</strong><small>Heritage escapes</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Bhimashankar" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/0/09/Bhimashankar_temple_front.jpg'); --city-image-size: 152%; --city-image-position: 50% 34%; --city-image-filter: saturate(1.04) contrast(1.08) brightness(1.1); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Bhimashankar</strong><small>Temple and nature trips</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Alibag" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Alibag_Morning.JPG/960px-Alibag_Morning.JPG');"
+              ></span
+            >
+            <span class="city-copy"><strong>Alibag</strong><small>Beachside getaways</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Matheran" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Matheran--_A_Hill_Station_in_Maharashtra.jpg/960px-Matheran--_A_Hill_Station_in_Maharashtra.jpg');"
+              ></span
+            >
+            <span class="city-copy"><strong>Matheran</strong><small>Hill station rides</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Ujjain" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/Mahakaleshwar_Temple%2C_Ujjain.jpg?width=1280'); --city-image-size: 158%; --city-image-position: 50% 34%; --city-image-filter: saturate(1.08) contrast(1.1) brightness(1.08); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Ujjain</strong><small>Spiritual circuits</small></span>
+          </button>
+          <button class="city-option" type="button" data-city-select="Nagpur" data-booking-target="outstation">
+            <span
+              class="city-icon"
+              aria-hidden="true"
+              style="--city-image: url('https://commons.wikimedia.org/wiki/Special:FilePath/BAPS_Swaminarayan_Temple%2C_Nagpur.jpg?width=1280'); --city-image-size: 156%; --city-image-position: 50% 36%; --city-image-filter: saturate(1.08) contrast(1.08) brightness(1.08); --city-image-hover-scale: 1.03;"
+              ></span
+            >
+            <span class="city-copy"><strong>Nagpur</strong><small>Regional travel</small></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="destinations" class="section destinations">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Popular Destinations</h2>
+          <p>Cab services are available for the following locations. Select a destination and book now.</p>
+        </div>
+        <div class="destination-grid">
+          <article class="destination-card">
+            <h3>Sambhajinagar</h3>
+            <p>Heritage travel, local tours and comfortable outstation rides.</p>
+            <a
+              class="btn btn-outline is-dark"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20for%20Sambhajinagar."
+              target="_blank"
+              rel="noreferrer"
+              >Book Now</a
+            >
+          </article>
+          <article class="destination-card">
+            <h3>Shirdi</h3>
+            <p>Spiritual tours, darshan visits and family travel.</p>
+            <a
+              class="btn btn-outline is-dark"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20for%20Shirdi."
+              target="_blank"
+              rel="noreferrer"
+              >Book Now</a
+            >
+          </article>
+          <article class="destination-card">
+            <h3>Nashik</h3>
+            <p>Pilgrimage routes, vineyard visits and smooth family travel across the city and beyond.</p>
+            <a
+              class="btn btn-outline is-dark"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20for%20Nashik."
+              target="_blank"
+              rel="noreferrer"
+              >Book Now</a
+            >
+          </article>
+          <article class="destination-card">
+            <h3>Bhimashankar</h3>
+            <p>Pilgrimage travel and scenic road trips with experienced drivers.</p>
+            <a
+              class="btn btn-outline is-dark"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20for%20Bhimashankar."
+              target="_blank"
+              rel="noreferrer"
+              >Book Now</a
+            >
+          </article>
+          <article class="destination-card">
+            <h3>Kolhapur</h3>
+            <p>Temple visits, shopping trips and dependable highway rides for families and frequent travelers.</p>
+            <a
+              class="btn btn-outline is-dark"
+              href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20for%20Kolhapur."
+              target="_blank"
+              rel="noreferrer"
+              >Book Now</a
+            >
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section testimonials">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Customer Testimonials</h2>
+          <p>Our customers love us for our punctual and safe service.</p>
+        </div>
+        <div class="testimonial-grid">
+          <article class="testimonial-card">
+            <p>"The driver arrived early and the trip was very comfortable. Highly recommended."</p>
+            <strong>- Priya M.</strong>
+          </article>
+          <article class="testimonial-card">
+            <p>"Great service for our family tour. Clean vehicle and friendly driver."</p>
+            <strong>- Rahul S.</strong>
+          </article>
+          <article class="testimonial-card">
+            <p>"Smooth airport transfer with on-time pickup. Will book again."</p>
+            <strong>- Anita K.</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section stats">
+      <div class="container stats-grid">
+        <div>
+          <h3 data-counter="15">0</h3>
+          <p>Years of Experience</p>
+        </div>
+        <div>
+          <h3 data-counter="10000">0</h3>
+          <p>Happy Customers</p>
+        </div>
+        <div>
+          <h3 data-counter="10" data-counter-suffix="+">0</h3>
+          <p>Fleet Vehicles</p>
+        </div>
+        <div>
+          <h3 data-counter="24" data-counter-suffix="/7">0</h3>
+          <p>Support Hours</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section coverage">
+      <div class="container coverage-grid">
+        <div class="coverage-panel">
+          <span class="eyebrow coverage-eyebrow">Always On The Move</span>
+          <h2>Service Coverage</h2>
+          <p class="coverage-lead">
+            We cover major cities, temple routes, business hubs and weekend destinations with
+            reliable cab service and GPS-backed trip monitoring.
+          </p>
+          <div class="coverage-points">
+            <article class="coverage-point">
+              <strong>City-to-city comfort</strong>
+              <span>Reliable pickups for families, corporate travel and long-distance bookings.</span>
+            </article>
+            <article class="coverage-point">
+              <strong>Pilgrimage and getaway routes</strong>
+              <span>Quick planning for temple visits, hill stations, coastal trips and regional travel.</span>
+            </article>
+          </div>
+          <div class="coverage-stat-grid" aria-label="Coverage highlights">
+            <div class="coverage-stat">
+              <strong>20+</strong>
+              <span>destinations served</span>
+            </div>
+            <div class="coverage-stat">
+              <strong>24x7</strong>
+              <span>trip assistance</span>
+            </div>
+            <div class="coverage-stat">
+              <strong>GPS</strong>
+              <span>ride monitoring</span>
+            </div>
+          </div>
+        </div>
+        <div class="coverage-map-card">
+          <div class="coverage-card-header">
+            <div>
+              <p class="coverage-card-kicker">Popular service zones</p>
+              <h3>Major Cities and Getaways</h3>
+            </div>
+            <span class="coverage-status">Available Now</span>
+          </div>
+          <p class="coverage-card-note">
+            From daily intercity bookings to weekend temple and leisure trips, our most requested
+            routes are ready for quick planning.
+          </p>
+          <div class="coverage-list">
+            <span>Pune</span>
+            <span>Mumbai</span>
+            <span>Goa</span>
+            <span>Kolhapur</span>
+            <span>Nashik</span>
+            <span>Shirdi</span>
+            <span>Sambhajinagar</span>
+            <span>Ahilyanagar</span>
+            <span>Solapur</span>
+            <span>Sangli</span>
+            <span>Miraj</span>
+            <span>Karad</span>
+            <span>Satara</span>
+            <span>Lonavala</span>
+            <span>Mahabaleshwar</span>
+            <span>Kokan</span>
+            <span>Hampi</span>
+            <span>Bhimashankar</span>
+            <span>Alibag</span>
+            <span>Matheran</span>
+            <span>Ujjain</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section cta">
+      <div class="container cta-inner">
+        <div>
+          <h2>Ready to Book Your Cab?</h2>
+          <p>Service enquiries go straight to WhatsApp, while corporate clients can use the dedicated form.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn" href="https://wa.me/919764642991?text=Hello%2C%20I%20have%20a%20service%20enquiry%20for%20AS%20Travel%20Solutions." target="_blank" rel="noreferrer">WhatsApp Service</a>
+          <a class="btn btn-outline" href="contact.html#enquiry">Corporate Form</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-head">
+            <img class="footer-brand-logo" src="assets/as-logo-badge.png" alt="" />
+            <div>
+              <h3>AS Travel Solutions</h3>
+              <span class="footer-brand-tag">Cab Service</span>
+            </div>
+          </div>
+          <p>
+            We are a trusted cab service provider offering outstation rides, airport transfers,
+            corporate travel and tour packages across Maharashtra and nearby states.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="destinations.html">Destinations</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><a href="tel:+919764642991">Phone: +91 9764642991</a></p>
+          <p><a href="tel:+919764642921">Alternate: +91 9764642921</a></p>
+          <p><a href="mailto:astravelsolutions@example.com">Email: astravelsolutions@example.com</a></p>
+          <p>Pune, Maharashtra</p>
+          <div class="footer-social">
+            <a href="https://wa.me/919764642991" target="_blank" rel="noreferrer" aria-label="WhatsApp" title="WhatsApp">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.91c0 2.1.55 4.14 1.6 5.94L0 24l6.33-1.66a11.88 11.88 0 0 0 5.73 1.46h.01c6.56 0 11.91-5.35 11.91-11.91 0-3.18-1.24-6.16-3.46-8.41Zm-8.45 18.3h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.75.98 1-3.65-.24-.38a9.87 9.87 0 0 1-1.52-5.23c0-5.45 4.43-9.88 9.88-9.88 2.64 0 5.12 1.03 6.99 2.9 1.87 1.87 2.9 4.35 2.9 6.99 0 5.45-4.43 9.88-9.88 9.88Zm5.42-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.46-.15-.66.15-.19.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.77-1.65-2.07-.17-.29-.02-.45.13-.59.13-.12.3-.32.45-.48.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.07-.15-.66-1.59-.9-2.18-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.52.07-.8.37-.27.29-1.04 1.01-1.04 2.46 0 1.45 1.07 2.85 1.22 3.05.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.69.25-1.28.17-1.41-.08-.12-.28-.2-.58-.35Z" />
+              </svg>
+              <span class="sr-only">WhatsApp</span>
+            </a>
+            <a href="mailto:astravelsolutions@example.com" aria-label="Email" title="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm17 2H4v.2l8 5.3 8-5.3V7Zm0 3.6-7.45 4.93a1 1 0 0 1-1.1 0L4 10.6V17h16v-6.4Z" />
+              </svg>
+              <span class="sr-only">Email</span>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2.5A2.5 2.5 0 0 0 4.5 7v10A2.5 2.5 0 0 0 7 19.5h10a2.5 2.5 0 0 0 2.5-2.5V7A2.5 2.5 0 0 0 17 4.5H7Zm5 2.25A5.25 5.25 0 1 1 6.75 12 5.26 5.26 0 0 1 12 6.75Zm0 2A3.25 3.25 0 1 0 15.25 12 3.26 3.26 0 0 0 12 8.75Zm5.5-3.37a1.12 1.12 0 1 1-1.12 1.12 1.12 1.12 0 0 1 1.12-1.12Z" />
+              </svg>
+              <span class="sr-only">Instagram</span>
+            </a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Pune,+Maharashtra" target="_blank" rel="noreferrer" aria-label="Google Maps" title="Google Maps">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7Zm0 9.5A2.5 2.5 0 1 0 12 6a2.5 2.5 0 0 0 0 5.5Z" />
+              </svg>
+              <span class="sr-only">Google Maps</span>
+            </a>
+          </div>
+        </div>
+        <div class="footer-map">
+          <h4>Find Us</h4>
+          <p>Serving Pune, Maharashtra and nearby cities.</p>
+          <iframe
+            src="https://www.google.com/maps?q=Pune,+Maharashtra&z=13&output=embed"
+            title="AS Travel Solutions service area in Pune, Maharashtra"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Copyright <span id="year"></span> AS Travel Solutions. All rights reserved.</span>
+      </div>
+    </footer>
+
+    <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+      <div class="mobile-bottom-nav-inner">
+        <a href="index.html" data-mobile-nav="home">
+          <span class="mobile-bottom-nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-5.5h-5V21H5a1 1 0 0 1-1-1z" />
+            </svg>
+          </span>
+          <span>Home</span>
+        </a>
+        <a href="services.html" data-mobile-nav="services">
+          <span class="mobile-bottom-nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 9.5h16" />
+              <path d="M6 8h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" />
+              <path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" />
+            </svg>
+          </span>
+          <span>Services</span>
+        </a>
+        <a href="destinations.html" data-mobile-nav="explore">
+          <span class="mobile-bottom-nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 20s6-5.4 6-10a6 6 0 1 0-12 0c0 4.6 6 10 6 10Z" />
+              <circle cx="12" cy="10" r="2.25" />
+            </svg>
+          </span>
+          <span>Explore</span>
+        </a>
+        <a
+          href="https://wa.me/919764642991?text=Hello%2C%20I%20want%20to%20book%20a%20cab%20with%20AS%20Travel%20Solutions."
+          target="_blank"
+          rel="noreferrer"
+          data-mobile-nav="enquiry"
+          class="mobile-bottom-nav-accent"
+        >
+          <span class="mobile-bottom-nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.91c0 2.1.55 4.14 1.6 5.94L0 24l6.33-1.66a11.88 11.88 0 0 0 5.73 1.46h.01c6.56 0 11.91-5.35 11.91-11.91 0-3.18-1.24-6.16-3.46-8.41Zm-8.45 18.3h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.75.98 1-3.65-.24-.38a9.87 9.87 0 0 1-1.52-5.23c0-5.45 4.43-9.88 9.88-9.88 2.64 0 5.12 1.03 6.99 2.9 1.87 1.87 2.9 4.35 2.9 6.99 0 5.45-4.43 9.88-9.88 9.88Zm5.42-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.46-.15-.66.15-.19.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.77-1.65-2.07-.17-.29-.02-.45.13-.59.13-.12.3-.32.45-.48.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.07-.15-.66-1.59-.9-2.18-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.52.07-.8.37-.27.29-1.04 1.01-1.04 2.46 0 1.45 1.07 2.85 1.22 3.05.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.69.25-1.28.17-1.41-.08-.12-.28-.2-.58-.35Z" />
+            </svg>
+          </span>
+          <span>Enquiry</span>
+        </a>
+        <a href="contact.html" data-mobile-nav="contact">
+          <span class="mobile-bottom-nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="3.25" />
+              <path d="M5.5 19a6.5 6.5 0 0 1 13 0" />
+            </svg>
+          </span>
+          <span>Contact</span>
+        </a>
+      </div>
+    </nav>
+
+    <a
+      class="floating-action"
+      href="https://wa.me/919764642991"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Chat on WhatsApp"
+      title="Chat on WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.91c0 2.1.55 4.14 1.6 5.94L0 24l6.33-1.66a11.88 11.88 0 0 0 5.73 1.46h.01c6.56 0 11.91-5.35 11.91-11.91 0-3.18-1.24-6.16-3.46-8.41Zm-8.45 18.3h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.75.98 1-3.65-.24-.38a9.87 9.87 0 0 1-1.52-5.23c0-5.45 4.43-9.88 9.88-9.88 2.64 0 5.12 1.03 6.99 2.9 1.87 1.87 2.9 4.35 2.9 6.99 0 5.45-4.43 9.88-9.88 9.88Zm5.42-7.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.46-.15-.66.15-.19.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.77-1.65-2.07-.17-.29-.02-.45.13-.59.13-.12.3-.32.45-.48.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.07-.15-.66-1.59-.9-2.18-.24-.58-.48-.5-.66-.51h-.56c-.2 0-.52.07-.8.37-.27.29-1.04 1.01-1.04 2.46 0 1.45 1.07 2.85 1.22 3.05.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.69.25-1.28.17-1.41-.08-.12-.28-.2-.58-.35Z" />
+      </svg>
+      <span class="sr-only">Chat on WhatsApp</span>
+    </a>
+
+    <datalist id="city-options">
+      <option value="Pune"></option>
+      <option value="Mumbai"></option>
+      <option value="Nashik"></option>
+      <option value="Shirdi"></option>
+      <option value="Shanishingnapur"></option>
+      <option value="Goa"></option>
+      <option value="Kolhapur"></option>
+      <option value="Sambhajinagar"></option>
+      <option value="Ahilyanagar"></option>
+      <option value="Solapur"></option>
+      <option value="Sangli"></option>
+      <option value="Miraj"></option>
+      <option value="Karad"></option>
+      <option value="Satara"></option>
+      <option value="Lonavala"></option>
+      <option value="Mahabaleshwar"></option>
+      <option value="Nagpur"></option>
+      <option value="Kokan"></option>
+      <option value="Hampi"></option>
+      <option value="Bhimashankar"></option>
+      <option value="Alibag"></option>
+      <option value="Matheran"></option>
+      <option value="Ujjain"></option>
+    </datalist>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

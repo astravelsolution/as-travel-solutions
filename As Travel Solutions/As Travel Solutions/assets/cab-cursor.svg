@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="32" viewBox="0 0 180 96" role="img" aria-labelledby="cabTitle cabDesc">
+  <title id="cabTitle">Cab cursor illustration</title>
+  <desc id="cabDesc">A yellow taxi-style cab with dark windows and wheels on a transparent background.</desc>
+  <defs>
+    <linearGradient id="cabBody" x1="18" y1="16" x2="158" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd34a" />
+      <stop offset="1" stop-color="#f4b321" />
+    </linearGradient>
+    <linearGradient id="cabGlass" x1="69" y1="20" x2="130" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#21437d" />
+      <stop offset="1" stop-color="#102344" />
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path
+      d="M18 59c0-10.49 8.51-19 19-19h13l11-16c5.24-7.65 13.93-12.2 23.2-12.2h29.13c9.31 0 18.03 4.6 23.26 12.31L147 40h7c11.6 0 21 9.4 21 21v7c0 7.73-6.27 14-14 14h-9.42a4 4 0 0 1-3.5-2.07L144.57 73H51.76l-3.2 6.5A4 4 0 0 1 45 82H32c-7.73 0-14-6.27-14-14v-9Z"
+      fill="url(#cabBody)"
+      stroke="#c78508"
+      stroke-width="3"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M62.5 40h71.18l-10.58-14.34a16.65 16.65 0 0 0-13.4-6.78H84.29a16.32 16.32 0 0 0-13.55 7.22L62.5 40Z"
+      fill="url(#cabGlass)"
+    />
+    <path d="M94 20v20" stroke="#7fb1ff" stroke-width="3" stroke-linecap="round" opacity=".85" />
+    <path d="M41 52h12" stroke="#fff0b1" stroke-width="4" stroke-linecap="round" opacity=".85" />
+    <path d="M142 52h15" stroke="#de8f00" stroke-width="4" stroke-linecap="round" />
+    <rect x="87" y="7" width="28" height="10" rx="5" fill="#ffe497" stroke="#c78508" stroke-width="2" />
+    <text x="101" y="15" text-anchor="middle" font-family="Poppins, Arial, sans-serif" font-size="7" font-weight="700" fill="#102344">
+      CAB
+    </text>
+    <circle cx="58" cy="74" r="14" fill="#16243d" />
+    <circle cx="138" cy="74" r="14" fill="#16243d" />
+    <circle cx="58" cy="74" r="6" fill="#d6dde7" />
+    <circle cx="138" cy="74" r="6" fill="#d6dde7" />
+    <path d="M45 73h18M125 73h26" stroke="#102344" stroke-width="4" stroke-linecap="round" opacity=".7" />
+    <path d="M18 59h157" stroke="#fff2bf" stroke-width="2" opacity=".55" />
+  </g>
+</svg>

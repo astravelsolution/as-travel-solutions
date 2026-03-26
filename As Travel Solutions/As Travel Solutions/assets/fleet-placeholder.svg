@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" fill="none">
+  <rect width="800" height="600" fill="#EEF3FB" />
+  <rect x="188" y="132" width="424" height="252" rx="28" fill="#FFFFFF" stroke="#D9E3F5" stroke-width="4" />
+  <path
+    d="M312 253c0-13.255 10.745-24 24-24h15.575a24 24 0 0 0 18.974-9.306l17.903-22.388A24 24 0 0 1 407.426 188h49.148a24 24 0 0 1 18.974 8.306l17.903 22.388A24 24 0 0 0 512.425 229H528c13.255 0 24 10.745 24 24v84c0 13.255-10.745 24-24 24H336c-13.255 0-24-10.745-24-24v-84Z"
+    stroke="#102A63"
+    stroke-width="16"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="392" cy="295" r="34" stroke="#102A63" stroke-width="16" />
+  <circle cx="472" cy="295" r="34" stroke="#102A63" stroke-width="16" />
+  <text x="400" y="450" text-anchor="middle" fill="#102A63" font-family="Poppins, Arial, sans-serif" font-size="38" font-weight="700">
+    Add Fleet Image
+  </text>
+  <text x="400" y="492" text-anchor="middle" fill="#5B6E91" font-family="Poppins, Arial, sans-serif" font-size="24" font-weight="500">
+    Replace this placeholder later
+  </text>
+</svg>
