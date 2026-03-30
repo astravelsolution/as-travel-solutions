@@ -114,7 +114,7 @@ whatsappFormButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const form = button.closest('form');
     if (!form) {
-      window.open(buildWhatsAppUrl('Hello, I want to book a cab with AS Travel Solutions.'), '_blank', 'noopener');
+      window.open(buildWhatsAppUrl('Hello, I want to book a cab with A S Travel Solution.'), '_blank', 'noopener');
       return;
     }
 
@@ -136,7 +136,7 @@ whatsappFormButtons.forEach((button) => {
       })
       .filter(Boolean);
 
-    const message = [`Hello, I want to book a ${bookingType} with AS Travel Solutions.`]
+    const message = [`Hello, I want to book a ${bookingType} with A S Travel Solution.`]
       .concat(details.length ? ['', 'Trip details:', ...details] : [])
       .join('\n');
 
@@ -185,9 +185,9 @@ corporateFormButtons.forEach((button) => {
     const contactPerson = form.querySelector('#contact-person')?.value.trim();
     const subject = companyName
       ? `Corporate enquiry from ${companyName}`
-      : `Corporate enquiry from ${contactPerson || 'AS Travel Solutions website visitor'}`;
+      : `Corporate enquiry from ${contactPerson || 'A S Travel Solution website visitor'}`;
 
-    const body = ['Hello AS Travel Solutions,', '', 'I would like to discuss a corporate travel requirement.', '']
+    const body = ['Hello A S Travel Solution,', '', 'I would like to discuss a corporate travel requirement.', '']
       .concat(details.length ? ['Details:', ...details] : [])
       .join('\n');
 
