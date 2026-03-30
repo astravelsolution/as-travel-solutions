@@ -12,7 +12,7 @@ const corporateFormButtons = document.querySelectorAll('[data-corporate-form]');
 const contactRedirectButtons = document.querySelectorAll('[data-contact-redirect]');
 const mobileBottomNavLinks = document.querySelectorAll('[data-mobile-nav]');
 const yearEl = document.getElementById('year');
-const whatsappNumber = '919764642991';
+const whatsappNumber = '919764642921';
 const corporateEmail = 'astravelsolutions@example.com';
 const revealSelectors = [
   '.hero-content',
