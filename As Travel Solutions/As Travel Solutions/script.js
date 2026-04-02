@@ -11,6 +11,9 @@ const bookingCityFields = document.querySelectorAll('[data-city-field="booking"]
 const corporateFormButtons = document.querySelectorAll('[data-corporate-form]');
 const contactRedirectButtons = document.querySelectorAll('[data-contact-redirect]');
 const mobileBottomNavLinks = document.querySelectorAll('[data-mobile-nav]');
+const mobileEnquiryMenus = document.querySelectorAll('[data-mobile-enquiry]');
+const floatingContactGroup = document.querySelector('.floating-contact-group');
+const bookingCard = document.querySelector('.booking-card');
 const yearEl = document.getElementById('year');
 const whatsappNumber = '919764642921';
 const corporateEmail = 'astravelsolutions@example.com';
@@ -66,6 +69,135 @@ if (mobileBottomNavLinks.length) {
       link.removeAttribute('aria-current');
     }
   });
+}
+
+if (mobileEnquiryMenus.length) {
+  const touchViewport = window.matchMedia('(max-width: 1100px)');
+  const hoverViewport = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  const setMobileEnquiryState = (menu, isOpen) => {
+    const trigger = menu.querySelector('[data-mobile-enquiry-trigger]');
+    if (!trigger) return;
+
+    menu.classList.toggle('is-open', isOpen);
+    trigger.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  const closeAllMobileEnquiryMenus = (exceptMenu = null) => {
+    mobileEnquiryMenus.forEach((menu) => {
+      if (menu === exceptMenu) return;
+      setMobileEnquiryState(menu, false);
+    });
+  };
+
+  mobileEnquiryMenus.forEach((menu) => {
+    const trigger = menu.querySelector('[data-mobile-enquiry-trigger]');
+    if (!trigger) return;
+
+    setMobileEnquiryState(menu, false);
+
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      if (!touchViewport.matches) return;
+
+      const shouldOpen = !menu.classList.contains('is-open');
+      closeAllMobileEnquiryMenus(menu);
+      setMobileEnquiryState(menu, shouldOpen);
+    });
+
+    menu.querySelectorAll('.mobile-bottom-nav-action').forEach((action) => {
+      action.addEventListener('click', () => {
+        setMobileEnquiryState(menu, false);
+      });
+    });
+
+    menu.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+
+      setMobileEnquiryState(menu, false);
+      trigger.focus();
+    });
+
+    menu.addEventListener('mouseleave', () => {
+      if (hoverViewport.matches) {
+        setMobileEnquiryState(menu, false);
+      }
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) {
+      closeAllMobileEnquiryMenus();
+      return;
+    }
+
+    const activeMenu = event.target.closest('[data-mobile-enquiry]');
+    closeAllMobileEnquiryMenus(activeMenu);
+  });
+
+  document.addEventListener('focusin', (event) => {
+    if (!(event.target instanceof Element)) {
+      closeAllMobileEnquiryMenus();
+      return;
+    }
+
+    const activeMenu = event.target.closest('[data-mobile-enquiry]');
+    closeAllMobileEnquiryMenus(activeMenu);
+  });
+
+  const handleMobileEnquiryViewportChange = () => {
+    if (!touchViewport.matches) {
+      closeAllMobileEnquiryMenus();
+    }
+  };
+
+  if (typeof touchViewport.addEventListener === 'function') {
+    touchViewport.addEventListener('change', handleMobileEnquiryViewportChange);
+  } else if (typeof touchViewport.addListener === 'function') {
+    touchViewport.addListener(handleMobileEnquiryViewportChange);
+  }
+}
+
+if (floatingContactGroup && bookingCard) {
+  const desktopFloatingContacts = window.matchMedia('(min-width: 981px)');
+  let bookingCardInView = false;
+
+  const syncFloatingContacts = () => {
+    floatingContactGroup.classList.toggle('is-hidden', desktopFloatingContacts.matches && bookingCardInView);
+  };
+
+  const setInitialFloatingContactsState = () => {
+    const bookingCardBounds = bookingCard.getBoundingClientRect();
+    bookingCardInView = bookingCardBounds.top < window.innerHeight && bookingCardBounds.bottom > 0;
+    syncFloatingContacts();
+  };
+
+  setInitialFloatingContactsState();
+
+  if ('IntersectionObserver' in window) {
+    const floatingContactObserver = new IntersectionObserver(
+      ([entry]) => {
+        bookingCardInView = entry.isIntersecting;
+        syncFloatingContacts();
+      },
+      {
+        threshold: 0.15,
+      }
+    );
+
+    floatingContactObserver.observe(bookingCard);
+  }
+
+  const handleFloatingContactsViewportChange = () => {
+    setInitialFloatingContactsState();
+  };
+
+  if (typeof desktopFloatingContacts.addEventListener === 'function') {
+    desktopFloatingContacts.addEventListener('change', handleFloatingContactsViewportChange);
+  } else if (typeof desktopFloatingContacts.addListener === 'function') {
+    desktopFloatingContacts.addListener(handleFloatingContactsViewportChange);
+  }
 }
 
 const setActiveBookingTab = (target) => {
@@ -214,9 +346,6 @@ if (slides.length > 1) {
 
 fleetCarousels.forEach((carousel) => {
   const carouselSlides = Array.from(carousel.querySelectorAll('.fleet-carousel-slide'));
-  const dots = Array.from(carousel.querySelectorAll('.fleet-carousel-dot'));
-  const prevBtn = carousel.querySelector('.fleet-carousel-prev');
-  const nextBtn = carousel.querySelector('.fleet-carousel-next');
 
   if (!carouselSlides.length) return;
 
@@ -229,12 +358,6 @@ fleetCarousels.forEach((carousel) => {
 
     carouselSlides.forEach((slide, index) => {
       slide.classList.toggle('is-active', index === activeIndex);
-    });
-
-    dots.forEach((dot, index) => {
-      const isActive = index === activeIndex;
-      dot.classList.toggle('is-active', isActive);
-      dot.setAttribute('aria-pressed', String(isActive));
     });
   };
 
@@ -249,30 +372,13 @@ fleetCarousels.forEach((carousel) => {
     if (carouselSlides.length <= 1 || autoSlideTimer) return;
     autoSlideTimer = window.setInterval(() => {
       setActiveSlide(activeIndex + 1);
-    }, 3500);
+    }, 8500);
   };
 
   const restartAutoSlide = () => {
     stopAutoSlide();
     startAutoSlide();
   };
-
-  prevBtn?.addEventListener('click', () => {
-    setActiveSlide(activeIndex - 1);
-    restartAutoSlide();
-  });
-
-  nextBtn?.addEventListener('click', () => {
-    setActiveSlide(activeIndex + 1);
-    restartAutoSlide();
-  });
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      setActiveSlide(index);
-      restartAutoSlide();
-    });
-  });
 
   carousel.addEventListener('mouseenter', stopAutoSlide);
   carousel.addEventListener('mouseleave', startAutoSlide);
