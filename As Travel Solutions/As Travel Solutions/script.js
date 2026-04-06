@@ -1,5 +1,7 @@
 const body = document.body;
 const navToggle = document.querySelector('.nav-toggle');
+const primaryNav = document.getElementById('primary-nav');
+const siteHeader = document.querySelector('.site-header');
 const tabs = document.querySelectorAll('.tab-btn');
 const tabPanels = document.querySelectorAll('.booking-form');
 const slides = document.querySelectorAll('.slide');
@@ -16,7 +18,9 @@ const floatingContactGroup = document.querySelector('.floating-contact-group');
 const bookingCard = document.querySelector('.booking-card');
 const yearEl = document.getElementById('year');
 const whatsappNumber = '919764642921';
-const corporateEmail = 'astravelsolutions@example.com';
+const whatsappLinks = document.querySelectorAll('a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]');
+const corporateEmail = 'astravelsolution600@gmail.com';
+const compactNavViewport = window.matchMedia('(max-width: 980px)');
 const revealSelectors = [
   '.hero-content',
   '.hero-panel',
@@ -41,11 +45,57 @@ const revealSelectors = [
   '.city-option',
 ];
 
-if (navToggle) {
+const setNavOpen = (isOpen) => {
+  body.classList.toggle('nav-open', Boolean(isOpen));
+
+  if (navToggle) {
+    navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  }
+};
+
+if (navToggle && primaryNav) {
+  setNavOpen(false);
+
   navToggle.addEventListener('click', () => {
-    const isOpen = body.classList.toggle('nav-open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
+    if (!compactNavViewport.matches) return;
+
+    setNavOpen(!body.classList.contains('nav-open'));
   });
+
+  primaryNav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (compactNavViewport.matches) {
+        setNavOpen(false);
+      }
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!compactNavViewport.matches || !body.classList.contains('nav-open')) return;
+    if (!(event.target instanceof Element)) return;
+    if (siteHeader && siteHeader.contains(event.target)) return;
+
+    setNavOpen(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !body.classList.contains('nav-open')) return;
+
+    setNavOpen(false);
+    navToggle.focus();
+  });
+
+  const handleNavViewportChange = () => {
+    if (!compactNavViewport.matches) {
+      setNavOpen(false);
+    }
+  };
+
+  if (typeof compactNavViewport.addEventListener === 'function') {
+    compactNavViewport.addEventListener('change', handleNavViewportChange);
+  } else if (typeof compactNavViewport.addListener === 'function') {
+    compactNavViewport.addListener(handleNavViewportChange);
+  }
 }
 
 if (mobileBottomNavLinks.length) {
@@ -216,6 +266,22 @@ const buildWhatsAppUrl = (message) => {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 };
 
+const normalizeWhatsAppHref = (href) => {
+  try {
+    const url = new URL(href, window.location.href);
+    const message = url.searchParams.get('text');
+    const normalizedUrl = new URL(`https://wa.me/${whatsappNumber}`);
+
+    if (message) {
+      normalizedUrl.searchParams.set('text', message);
+    }
+
+    return normalizedUrl.toString();
+  } catch {
+    return href;
+  }
+};
+
 const buildMailtoUrl = (email, subject, body) => {
   return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 };
@@ -232,6 +298,12 @@ tabs.forEach((tab) => {
   tab.addEventListener('click', () => {
     setActiveBookingTab(tab.dataset.tab);
   });
+});
+
+whatsappLinks.forEach((link) => {
+  const href = link.getAttribute('href');
+  if (!href) return;
+  link.setAttribute('href', normalizeWhatsAppHref(href));
 });
 
 bookingShortcuts.forEach((shortcut) => {
@@ -350,45 +422,11 @@ fleetCarousels.forEach((carousel) => {
   if (!carouselSlides.length) return;
 
   let activeIndex = carouselSlides.findIndex((slide) => slide.classList.contains('is-active'));
-  let autoSlideTimer = null;
   if (activeIndex < 0) activeIndex = 0;
 
-  const setActiveSlide = (nextIndex) => {
-    activeIndex = (nextIndex + carouselSlides.length) % carouselSlides.length;
-
-    carouselSlides.forEach((slide, index) => {
-      slide.classList.toggle('is-active', index === activeIndex);
-    });
-  };
-
-  const stopAutoSlide = () => {
-    if (autoSlideTimer) {
-      window.clearInterval(autoSlideTimer);
-      autoSlideTimer = null;
-    }
-  };
-
-  const startAutoSlide = () => {
-    if (carouselSlides.length <= 1 || autoSlideTimer) return;
-    autoSlideTimer = window.setInterval(() => {
-      setActiveSlide(activeIndex + 1);
-    }, 8500);
-  };
-
-  const restartAutoSlide = () => {
-    stopAutoSlide();
-    startAutoSlide();
-  };
-
-  carousel.addEventListener('mouseenter', stopAutoSlide);
-  carousel.addEventListener('mouseleave', startAutoSlide);
-  carousel.addEventListener('focusin', stopAutoSlide);
-  carousel.addEventListener('focusout', () => {
-    const focusedInsideCarousel = carousel.contains(document.activeElement);
-    if (!focusedInsideCarousel) startAutoSlide();
+  carouselSlides.forEach((slide, index) => {
+    slide.classList.toggle('is-active', index === activeIndex);
   });
-
-  startAutoSlide();
 });
 
 const revealElements = document.querySelectorAll(revealSelectors.join(','));
