@@ -5,7 +5,7 @@ const siteHeader = document.querySelector('.site-header');
 const tabs = document.querySelectorAll('.tab-btn');
 const tabPanels = document.querySelectorAll('.booking-form');
 const slides = document.querySelectorAll('.slide');
-const fleetCarousels = document.querySelectorAll('[data-fleet-carousel]');
+const testimonialSliders = document.querySelectorAll('[data-testimonial-slider]');
 const bookingShortcuts = document.querySelectorAll('[data-booking-target]');
 const whatsappFormButtons = document.querySelectorAll('[data-whatsapp-form]');
 const citySelectionButtons = document.querySelectorAll('[data-city-select]');
@@ -28,10 +28,9 @@ const revealSelectors = [
   '.section-heading',
   '.service-card',
   '.offer-card',
-  '.fleet-card',
   '.destination-card',
   '.specialization-list span',
-  '.testimonial-card',
+  '.testimonial-slider',
   '.stats-grid > div',
   '.coverage-list span',
   '.city-list span',
@@ -416,16 +415,175 @@ if (slides.length > 1) {
   }, 5000);
 }
 
-fleetCarousels.forEach((carousel) => {
-  const carouselSlides = Array.from(carousel.querySelectorAll('.fleet-carousel-slide'));
+testimonialSliders.forEach((slider) => {
+  const viewport = slider.querySelector('[data-testimonial-viewport]');
+  const track = slider.querySelector('[data-testimonial-track]');
+  const dotsContainer = slider.querySelector('[data-testimonial-dots]');
+  const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (!carouselSlides.length) return;
+  if (!(viewport && track)) return;
 
-  let activeIndex = carouselSlides.findIndex((slide) => slide.classList.contains('is-active'));
-  if (activeIndex < 0) activeIndex = 0;
+  const originalCards = Array.from(track.querySelectorAll('.testimonial-card'));
+  if (originalCards.length <= 1) return;
 
-  carouselSlides.forEach((slide, index) => {
-    slide.classList.toggle('is-active', index === activeIndex);
+  let currentIndex = 0;
+  let cardsPerView = 3;
+  let autoplayId = null;
+  let resizeFrame = 0;
+
+  const getCardsPerView = () => {
+    if (window.matchMedia('(max-width: 640px)').matches) return 1;
+    if (window.matchMedia('(max-width: 980px)').matches) return 2;
+    return 3;
+  };
+
+  const cloneCard = (card) => {
+    const clone = card.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    return clone;
+  };
+
+  const getCardGap = () => {
+    const styles = window.getComputedStyle(track);
+    return parseFloat(styles.columnGap || styles.gap || '0') || 0;
+  };
+
+  const updateDots = () => {
+    if (!dotsContainer) return;
+
+    Array.from(dotsContainer.children).forEach((dot, index) => {
+      const isActive = index === currentIndex % originalCards.length;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-pressed', String(isActive));
+    });
+  };
+
+  const setTrackPosition = (useTransition = true) => {
+    const renderedCards = track.querySelectorAll('.testimonial-card');
+    const sampleCard = renderedCards[cardsPerView] || renderedCards[0];
+    if (!sampleCard) return;
+
+    const cardWidth = sampleCard.getBoundingClientRect().width;
+    const translateIndex = currentIndex + cardsPerView;
+    const offset = translateIndex * (cardWidth + getCardGap());
+
+    track.style.transition = useTransition ? 'transform 0.65s ease' : 'none';
+    track.style.transform = `translateX(-${offset}px)`;
+    updateDots();
+  };
+
+  const buildDots = () => {
+    if (!dotsContainer) return;
+
+    dotsContainer.innerHTML = '';
+
+    originalCards.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'testimonial-dot';
+      dot.setAttribute('aria-label', `Show testimonial ${index + 1}`);
+      dot.setAttribute('aria-pressed', 'false');
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        setTrackPosition(true);
+        startAutoplay();
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    updateDots();
+  };
+
+  const rebuildTrack = () => {
+    cardsPerView = getCardsPerView();
+    const normalizedIndex = ((currentIndex % originalCards.length) + originalCards.length) % originalCards.length;
+    const leadingClones = originalCards.slice(-cardsPerView).map(cloneCard);
+    const trailingClones = originalCards.slice(0, cardsPerView).map(cloneCard);
+
+    track.replaceChildren(...leadingClones, ...originalCards, ...trailingClones);
+    currentIndex = normalizedIndex;
+
+    requestAnimationFrame(() => {
+      setTrackPosition(false);
+    });
+  };
+
+  const stopAutoplay = () => {
+    if (!autoplayId) return;
+    window.clearInterval(autoplayId);
+    autoplayId = null;
+  };
+
+  const goToNext = () => {
+    currentIndex += 1;
+    setTrackPosition(true);
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    if (reduceMotionQuery.matches || originalCards.length <= cardsPerView) return;
+
+    autoplayId = window.setInterval(goToNext, 4200);
+  };
+
+  track.addEventListener('transitionend', () => {
+    if (currentIndex >= originalCards.length) {
+      currentIndex = 0;
+      setTrackPosition(false);
+      return;
+    }
+
+    if (currentIndex < 0) {
+      currentIndex = originalCards.length - 1;
+      setTrackPosition(false);
+    }
+  });
+
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
+  slider.addEventListener('focusin', stopAutoplay);
+  slider.addEventListener('focusout', (event) => {
+    if (event.relatedTarget instanceof Node && slider.contains(event.relatedTarget)) return;
+    startAutoplay();
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoplay();
+      return;
+    }
+
+    startAutoplay();
+  });
+
+  const handleMotionChange = () => {
+    if (reduceMotionQuery.matches) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
+  };
+
+  if (typeof reduceMotionQuery.addEventListener === 'function') {
+    reduceMotionQuery.addEventListener('change', handleMotionChange);
+  } else if (typeof reduceMotionQuery.addListener === 'function') {
+    reduceMotionQuery.addListener(handleMotionChange);
+  }
+
+  buildDots();
+  rebuildTrack();
+  startAutoplay();
+
+  window.addEventListener('resize', () => {
+    if (resizeFrame) {
+      window.cancelAnimationFrame(resizeFrame);
+    }
+
+    resizeFrame = window.requestAnimationFrame(() => {
+      rebuildTrack();
+      startAutoplay();
+    });
   });
 });
 
