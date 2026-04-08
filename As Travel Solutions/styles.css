@@ -3272,6 +3272,10 @@ figure {
 }
 
 @media (max-width: 980px) {
+  .fleet-pricing-note {
+    display: none;
+  }
+
   body {
     padding-bottom: 0;
   }
