@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "As Travel Solutions/**"
-      - ".github/workflows/deploy-pages.yml"
-      - ".gitignore"
   workflow_dispatch:
 
 permissions:
