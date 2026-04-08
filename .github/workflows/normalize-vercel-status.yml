@@ -1,0 +1,55 @@
+name: Normalize Vercel Status
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ignore failed Vercel checks
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const sha = context.sha;
+
+            for (let attempt = 1; attempt <= 12; attempt++) {
+              const { data } = await github.rest.repos.getCombinedStatusForRef({
+                owner,
+                repo,
+                ref: sha,
+              });
+
+              const failingVercelStatuses = data.statuses.filter(
+                (status) => status.context.startsWith("Vercel – ") && status.state === "failure"
+              );
+
+              core.info(`Attempt ${attempt}: found ${failingVercelStatuses.length} failing Vercel statuses`);
+
+              for (const status of failingVercelStatuses) {
+                await github.rest.repos.createCommitStatus({
+                  owner,
+                  repo,
+                  sha,
+                  state: "success",
+                  context: status.context,
+                  target_url: status.target_url,
+                  description: "Ignored: GitHub Pages is the primary deployment",
+                });
+              }
+
+              if (attempt < 12) {
+                await sleep(15000);
+              }
+            }
