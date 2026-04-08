@@ -107,7 +107,8 @@ figure {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .topbar-phone-icon {
@@ -2470,6 +2471,43 @@ figure {
   flex-wrap: wrap;
 }
 
+.hero-actions .btn,
+.cta-actions .btn {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 16px 28px rgba(10, 8, 4, 0.2);
+  animation: aboutButtonPulse 4.8s ease-in-out infinite;
+}
+
+.hero-actions .btn:nth-child(2),
+.cta-actions .btn:nth-child(2) {
+  animation-delay: 0.45s;
+}
+
+.hero-actions .btn::after,
+.cta-actions .btn::after {
+  content: "";
+  position: absolute;
+  top: -120%;
+  left: -32%;
+  width: 36%;
+  height: 340%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0));
+  transform: rotate(24deg);
+  pointer-events: none;
+  animation: aboutButtonSheen 4.6s ease-in-out infinite;
+}
+
+.hero-actions .btn:nth-child(2)::after,
+.cta-actions .btn:nth-child(2)::after {
+  animation-delay: 0.55s;
+}
+
+.hero-actions .btn-outline,
+.cta-actions .btn-outline {
+  box-shadow: inset 0 0 0 1px rgba(241, 213, 122, 0.08), 0 16px 28px rgba(10, 8, 4, 0.18);
+}
+
 .about-cta {
   position: relative;
   overflow: hidden;
@@ -3156,6 +3194,10 @@ figure {
   .about-cta .cta-inner > div:first-child h2,
   .about-cta .cta-inner > div:first-child h2::after,
   .about-cta .cta-inner > div:first-child p,
+  .hero-actions .btn,
+  .hero-actions .btn::after,
+  .cta-actions .btn,
+  .cta-actions .btn::after,
   .about-cta .cta-actions,
   .about-cta .cta-actions .btn,
   .about-cta .cta-actions .btn::after {
@@ -3366,7 +3408,7 @@ figure {
   }
 
   body.nav-open {
-    overflow: hidden;
+    overflow-x: clip;
   }
 
   .topbar-inner {
@@ -3436,6 +3478,7 @@ figure {
   .site-nav {
     position: absolute;
     top: calc(100% + 0.55rem);
+    bottom: auto;
     left: 0;
     right: 0;
     z-index: 30;
@@ -3449,10 +3492,15 @@ figure {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transform: translateY(-0.35rem);
+    transform: translateY(0.35rem);
+    transform-origin: top center;
     transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
     max-height: min(calc(100dvh - 130px), 420px);
     overflow-y: auto;
+  }
+
+  .site-header {
+    z-index: 80;
   }
 
   .site-nav a {
@@ -3479,8 +3527,16 @@ figure {
     transform: translateY(0);
   }
 
+  body.nav-open .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+  }
+
   .nav-toggle {
     display: inline-flex !important;
+    position: relative;
+    z-index: 31;
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
@@ -3499,7 +3555,21 @@ figure {
   }
 
   .floating-contact-group {
-    display: none;
+    display: grid;
+    right: 0.9rem;
+    bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.55rem;
+    z-index: 46;
+  }
+
+  .floating-action {
+    width: 50px;
+    height: 50px;
+  }
+
+  .floating-action svg {
+    width: 22px;
+    height: 22px;
   }
 
   .footer-grid {
@@ -3621,6 +3691,16 @@ figure {
     width: 100%;
   }
 
+  .floating-contact-group {
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .floating-action {
+    width: 46px;
+    height: 46px;
+  }
+
   .booking-form {
     grid-template-columns: 1fr;
   }
@@ -3648,6 +3728,10 @@ figure {
 
   .topbar-phone {
     justify-content: center;
+  }
+
+  .topbar .btn-small {
+    display: none;
   }
 
   .page-hero {
