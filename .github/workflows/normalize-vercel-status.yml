@@ -32,7 +32,7 @@ jobs:
               });
 
               const failingVercelStatuses = data.statuses.filter(
-                (status) => status.context.startsWith("Vercel – ") && status.state === "failure"
+                (status) => status.context.startsWith("Vercel") && status.state === "failure"
               );
 
               core.info(`Attempt ${attempt}: found ${failingVercelStatuses.length} failing Vercel statuses`);
