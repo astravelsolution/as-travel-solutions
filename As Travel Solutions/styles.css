@@ -820,11 +820,11 @@ figure {
 
 .offer-card-photo-layout .offer-card-media {
   min-height: var(--offer-media-height);
-  padding: 0.9rem 1rem 0.55rem;
-  border-radius: 28px;
-  overflow: hidden;
+  padding: 0;
+  border-radius: 0;
+  overflow: visible;
   background: transparent;
-  border: 1px solid rgba(199, 148, 47, 0.1);
+  border: 0;
   box-shadow: none;
 }
 
@@ -871,6 +871,11 @@ figure {
 
 .offer-card-media-tavera {
   --offer-image-scale: 1.16;
+}
+
+.offer-card-media-urbania {
+  --offer-image-scale: 1.12;
+  --offer-image-position: center 54%;
 }
 
 .offer-card-media-placeholder {
@@ -1583,6 +1588,10 @@ figure {
 
 .destination-card .btn {
   margin-top: auto;
+  margin-inline: auto;
+  align-self: center;
+  min-width: 11rem;
+  text-align: center;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease,
     background-color 0.25s ease;
 }
@@ -2202,6 +2211,78 @@ figure {
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1rem;
   align-content: start;
+}
+
+.about-purpose-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.about-purpose-heading {
+  max-width: 44rem;
+  margin-inline: auto;
+  margin-bottom: 1.75rem;
+}
+
+.about-purpose-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.about-purpose-card {
+  position: relative;
+  padding: 1.6rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(168, 116, 24, 0.12);
+  box-shadow: 0 18px 34px rgba(22, 15, 9, 0.08);
+  overflow: hidden;
+}
+
+.about-purpose-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(168, 116, 24, 0.92), rgba(10, 33, 79, 0.85));
+  transform: scaleX(0.34);
+  transform-origin: left center;
+}
+
+.about-purpose-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.95rem;
+  color: var(--red);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.about-purpose-label::before {
+  content: "";
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c7942f 0%, #f1d57a 100%);
+  box-shadow: 0 0 0 6px rgba(242, 217, 125, 0.16);
+}
+
+.about-purpose-card h3 {
+  margin: 0 0 0.85rem;
+  color: var(--navy);
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  line-height: 1.3;
+}
+
+.about-purpose-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
 }
 
 .coverage-list span {
@@ -3272,8 +3353,12 @@ figure {
 }
 
 @media (max-width: 980px) {
-  .fleet-pricing-note {
-    display: none;
+  .intro-copy p,
+  .checklist li {
+    text-align: justify;
+    text-align-last: left;
+    text-justify: inter-word;
+    hyphens: auto;
   }
 
   body {
@@ -3319,6 +3404,10 @@ figure {
   .coverage-panel,
   .coverage-map-card {
     padding: 1.8rem;
+  }
+
+  .about-purpose-grid {
+    grid-template-columns: 1fr;
   }
 
   .coverage-card-header {
@@ -3705,7 +3794,7 @@ figure {
   }
 
   .offer-card-photo-layout .offer-card-media {
-    padding: 0.75rem 0.8rem 0.35rem;
+    padding: 0;
     margin-bottom: 0;
   }
 
