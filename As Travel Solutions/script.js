@@ -29,7 +29,7 @@ const revealSelectors = [
   '.service-card',
   '.offer-card',
   '.destination-card',
-  '.specialization-list span',
+  '.specialization-list span, .specialization-list a',
   '.testimonial-slider',
   '.stats-grid > div',
   '.coverage-list span',
@@ -298,6 +298,45 @@ tabs.forEach((tab) => {
     setActiveBookingTab(tab.dataset.tab);
   });
 });
+
+const applyBookingPrefillFromUrl = () => {
+  if (!tabPanels.length) return;
+
+  const currentUrl = new URL(window.location.href);
+  const requestedTab = currentUrl.searchParams.get('tab')?.trim();
+  const fromCity = currentUrl.searchParams.get('from')?.trim();
+  const toCity = currentUrl.searchParams.get('to')?.trim();
+
+  if (!requestedTab && !fromCity && !toCity) return;
+
+  const availableTabs = new Set(
+    Array.from(tabPanels)
+      .map((panel) => panel.dataset.tabPanel)
+      .filter(Boolean)
+  );
+
+  const fallbackTab = toCity ? 'outstation' : fromCity ? 'oneway' : '';
+  const targetTab = requestedTab && availableTabs.has(requestedTab) ? requestedTab : fallbackTab;
+
+  if (targetTab) {
+    setActiveBookingTab(targetTab);
+  }
+
+  tabPanels.forEach((panel) => {
+    const fromField = panel.querySelector('[data-booking-field="from"]');
+    const toField = panel.querySelector('[data-booking-field="to"]');
+
+    if (fromCity && fromField instanceof HTMLInputElement) {
+      fromField.value = fromCity;
+    }
+
+    if (toCity && toField instanceof HTMLInputElement) {
+      toField.value = toCity;
+    }
+  });
+};
+
+applyBookingPrefillFromUrl();
 
 whatsappLinks.forEach((link) => {
   const href = link.getAttribute('href');
