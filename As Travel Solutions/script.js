@@ -42,6 +42,11 @@ const revealSelectors = [
   '.form-card',
   '.map-card',
   '.city-option',
+  '.package-stat',
+  '.package-overview-card',
+  '.package-detail-card',
+  '.package-note-card',
+  '.package-faq-card',
 ];
 
 const setNavOpen = (isOpen) => {
@@ -104,6 +109,8 @@ if (mobileBottomNavLinks.length) {
     'index.html': 'home',
     'about.html': 'home',
     'services.html': 'services',
+    'packages.html': 'services',
+    'package-details.html': 'services',
     'destinations.html': 'explore',
     'contact.html': 'contact',
   };
@@ -444,6 +451,64 @@ contactRedirectButtons.forEach((button) => {
     window.location.href = targetUrl;
   });
 });
+
+const packageDetailStacks = document.querySelectorAll('[data-package-detail-stack]');
+if (packageDetailStacks.length) {
+  packageDetailStacks.forEach((stack) => {
+    const packageCards = Array.from(stack.querySelectorAll('.package-detail-card[id]'));
+    const packageNavLinks = Array.from(document.querySelectorAll('[data-package-link]'));
+    const defaultCard = packageCards[0];
+    let isInitialPackageSync = true;
+
+    if (!defaultCard) return;
+
+    const syncActivePackageCard = () => {
+      const requestedId = decodeURIComponent(window.location.hash.replace('#', '').trim());
+      const activeCard = packageCards.find((card) => card.id === requestedId) || defaultCard;
+
+      stack.classList.add('is-controlled');
+
+      packageCards.forEach((card) => {
+        const isActive = card === activeCard;
+        card.classList.toggle('is-active', isActive);
+        if (isActive) {
+          card.classList.add('is-visible');
+        }
+      });
+
+      packageNavLinks.forEach((link) => {
+        const isActive = link.dataset.packageLink === activeCard.id;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+
+      const activeTitle = activeCard.querySelector('h2')?.textContent?.trim();
+      if (activeTitle) {
+        document.title = `${activeTitle} | A S Travel Solution`;
+      }
+
+      if (window.location.hash.replace('#', '') !== activeCard.id) {
+        window.history.replaceState(null, '', `#${activeCard.id}`);
+      }
+
+      requestAnimationFrame(() => {
+        activeCard.scrollIntoView({
+          behavior: isInitialPackageSync ? 'auto' : 'smooth',
+          block: 'start',
+        });
+      });
+
+      isInitialPackageSync = false;
+    };
+
+    window.addEventListener('hashchange', syncActivePackageCard);
+    syncActivePackageCard();
+  });
+}
 
 let slideIndex = 0;
 if (slides.length > 1) {
