@@ -21,6 +21,9 @@ const whatsappNumber = '919764642921';
 const whatsappLinks = document.querySelectorAll('a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]');
 const corporateEmail = 'astravelsolution600@gmail.com';
 const compactNavViewport = window.matchMedia('(max-width: 980px)');
+const isEmbeddedPackagePage =
+  body.classList.contains('package-detail-page') &&
+  new URLSearchParams(window.location.search).get('embedded') === '1';
 const revealSelectors = [
   '.hero-content',
   '.hero-panel',
@@ -42,12 +45,45 @@ const revealSelectors = [
   '.form-card',
   '.map-card',
   '.city-option',
-  '.package-stat',
   '.package-overview-card',
   '.package-detail-card',
   '.package-note-card',
   '.package-faq-card',
 ];
+
+if (isEmbeddedPackagePage) {
+  body.classList.add('is-embedded');
+}
+
+const notifyEmbeddedPackageHeight = () => {
+  if (!isEmbeddedPackagePage || window.parent === window) return;
+
+  const height = Math.max(
+    document.documentElement?.scrollHeight || 0,
+    document.body?.scrollHeight || 0,
+    document.documentElement?.offsetHeight || 0,
+    document.body?.offsetHeight || 0
+  );
+
+  window.parent.postMessage(
+    {
+      type: 'as-package-embed-height',
+      height,
+      hash: window.location.hash.replace('#', ''),
+    },
+    '*'
+  );
+};
+
+if (isEmbeddedPackagePage) {
+  window.addEventListener('load', () => {
+    requestAnimationFrame(notifyEmbeddedPackageHeight);
+  });
+
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(notifyEmbeddedPackageHeight);
+  });
+}
 
 const setNavOpen = (isOpen) => {
   body.classList.toggle('nav-open', Boolean(isOpen));
@@ -452,8 +488,175 @@ contactRedirectButtons.forEach((button) => {
   });
 });
 
+const packageDrawer = document.querySelector('[data-package-drawer]');
+if (packageDrawer) {
+  const packageLauncherCards = Array.from(
+    document.querySelectorAll('.package-browser .package-overview-card[href*="package-details.html#details-"]')
+  );
+  const drawerFrame = packageDrawer.querySelector('[data-package-drawer-frame]');
+  const drawerBody = packageDrawer.querySelector('[data-package-drawer-body]');
+  const drawerState = packageDrawer.querySelector('[data-package-drawer-state]');
+  const drawerTitle = packageDrawer.querySelector('#package-drawer-title');
+  const drawerCloseTriggers = Array.from(packageDrawer.querySelectorAll('[data-package-drawer-close]'));
+  let packageDrawerCloseTimer = null;
+  let activeDrawerPackageId = '';
+  let lastDrawerTrigger = null;
+
+  const getPackageCardById = (packageId) =>
+    packageLauncherCards.find((card) => card.getAttribute('href')?.trim().endsWith(`#${packageId}`)) || null;
+
+  const setActivePackageLauncher = (activePackageId) => {
+    packageLauncherCards.forEach((card) => {
+      const isActive = card.getAttribute('href')?.trim().endsWith(`#${activePackageId}`);
+      card.classList.toggle('is-active-detail', Boolean(activePackageId) && Boolean(isActive));
+    });
+  };
+
+  const openPackageDrawer = (packageId, trigger) => {
+    if (!(drawerFrame && drawerBody && drawerState && drawerTitle) || !packageId) return;
+
+    window.clearTimeout(packageDrawerCloseTimer);
+
+    const relatedCard = getPackageCardById(packageId);
+    const relatedTitle = relatedCard?.querySelector('h3')?.textContent?.trim();
+    activeDrawerPackageId = packageId;
+    lastDrawerTrigger = trigger || relatedCard || lastDrawerTrigger;
+
+    drawerTitle.textContent = relatedTitle || 'Package Details';
+    drawerState.hidden = false;
+    drawerFrame.hidden = true;
+    drawerFrame.style.height = '720px';
+    drawerFrame.src = `package-details.html?embedded=1#${packageId}`;
+    packageDrawer.hidden = false;
+    packageDrawer.setAttribute('aria-hidden', 'false');
+    body.classList.add('package-drawer-open');
+    setActivePackageLauncher(packageId);
+
+    requestAnimationFrame(() => {
+      packageDrawer.classList.add('is-open');
+      drawerBody.scrollTop = 0;
+    });
+
+    if (window.location.hash.replace('#', '') !== packageId) {
+      window.history.replaceState(null, '', `#${packageId}`);
+    }
+  };
+
+  const closePackageDrawer = () => {
+    if (packageDrawer.hidden) return;
+
+    const hashValue = window.location.hash.replace('#', '');
+    const triggerToFocus = lastDrawerTrigger;
+
+    packageDrawer.classList.remove('is-open');
+    packageDrawer.setAttribute('aria-hidden', 'true');
+    body.classList.remove('package-drawer-open');
+    setActivePackageLauncher('');
+
+    if (hashValue === activeDrawerPackageId) {
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+    }
+
+    packageDrawerCloseTimer = window.setTimeout(() => {
+      packageDrawer.hidden = true;
+      drawerFrame.hidden = true;
+      drawerFrame.removeAttribute('src');
+      drawerFrame.style.height = '720px';
+      drawerState.hidden = false;
+      drawerTitle.textContent = 'Package Details';
+      activeDrawerPackageId = '';
+
+      if (triggerToFocus instanceof HTMLElement) {
+        triggerToFocus.focus();
+      }
+    }, 360);
+  };
+
+  packageLauncherCards.forEach((card) => {
+    card.addEventListener('click', (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const href = card.getAttribute('href') || '';
+      const packageId = href.split('#')[1];
+      if (!packageId) return;
+
+      event.preventDefault();
+      openPackageDrawer(packageId, card);
+    });
+  });
+
+  drawerCloseTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', closePackageDrawer);
+  });
+
+  if (drawerFrame) {
+    drawerFrame.addEventListener('load', () => {
+      if (packageDrawer.hidden) return;
+
+      let nextTitle = '';
+      let nextHeight = 0;
+
+      try {
+        const frameDocument = drawerFrame.contentWindow?.document;
+        nextTitle =
+          frameDocument?.querySelector('.package-detail-card.is-active h2')?.textContent?.trim() ||
+          frameDocument?.querySelector('.package-detail-card h2')?.textContent?.trim() ||
+          '';
+        nextHeight = Math.max(
+          frameDocument?.documentElement?.scrollHeight || 0,
+          frameDocument?.body?.scrollHeight || 0
+        );
+      } catch {}
+
+      if (nextTitle) {
+        drawerTitle.textContent = nextTitle;
+      }
+
+      if (nextHeight) {
+        drawerFrame.style.height = `${Math.max(520, Math.ceil(nextHeight))}px`;
+      }
+
+      drawerFrame.hidden = false;
+      drawerState.hidden = true;
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || packageDrawer.hidden) return;
+    closePackageDrawer();
+  });
+
+  window.addEventListener('message', (event) => {
+    if (event.source !== drawerFrame?.contentWindow) return;
+
+    const { data } = event;
+    if (!data || data.type !== 'as-package-embed-height') return;
+    if (typeof data.height !== 'number' || !Number.isFinite(data.height)) return;
+
+    drawerFrame.style.height = `${Math.max(520, Math.ceil(data.height))}px`;
+    drawerFrame.hidden = false;
+    drawerState.hidden = true;
+  });
+
+  const requestedPackageId = decodeURIComponent(window.location.hash.replace('#', '').trim());
+  if (requestedPackageId.startsWith('details-')) {
+    openPackageDrawer(requestedPackageId);
+  }
+}
+
 const packageDetailStacks = document.querySelectorAll('[data-package-detail-stack]');
 if (packageDetailStacks.length) {
+  const packageRateTemplate = document.getElementById('package-rate-table-template');
+
   packageDetailStacks.forEach((stack) => {
     const packageCards = Array.from(stack.querySelectorAll('.package-detail-card[id]'));
     const packageNavLinks = Array.from(document.querySelectorAll('[data-package-link]'));
@@ -461,6 +664,23 @@ if (packageDetailStacks.length) {
     let isInitialPackageSync = true;
 
     if (!defaultCard) return;
+
+    if (packageRateTemplate) {
+      packageCards.forEach((card) => {
+        const detailContent = card.querySelector('.package-detail-content');
+        const noteGrid = detailContent?.querySelector('.package-note-grid');
+
+        if (!(detailContent && !detailContent.querySelector('.package-rate-block'))) return;
+
+        const rateBlock = packageRateTemplate.content.cloneNode(true);
+
+        if (noteGrid) {
+          noteGrid.after(rateBlock);
+        } else {
+          detailContent.append(rateBlock);
+        }
+      });
+    }
 
     const syncActivePackageCard = () => {
       const requestedId = decodeURIComponent(window.location.hash.replace('#', '').trim());
@@ -501,6 +721,10 @@ if (packageDetailStacks.length) {
           block: 'start',
         });
       });
+
+      if (isEmbeddedPackagePage) {
+        requestAnimationFrame(notifyEmbeddedPackageHeight);
+      }
 
       isInitialPackageSync = false;
     };
