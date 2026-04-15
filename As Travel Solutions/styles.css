@@ -5784,6 +5784,13 @@ body.package-drawer-open {
   min-width: 7.5rem;
 }
 
+.package-rate-mobile-global {
+  display: none;
+  width: 100%;
+  max-width: 32rem;
+  margin: 1.25rem auto 0;
+}
+
 .package-rate-pdf-modal {
   position: fixed;
   inset: 0;
@@ -6017,6 +6024,10 @@ body.package-rate-pdf-open {
   }
 
   .package-rate-mobile-card {
+    display: none;
+  }
+
+  .package-rate-mobile-global {
     display: grid;
   }
 

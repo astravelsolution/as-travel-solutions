@@ -672,7 +672,6 @@ if (packageDrawer) {
 const packageDetailStacks = document.querySelectorAll('[data-package-detail-stack]');
 if (packageDetailStacks.length) {
   const packageRateTemplate = document.getElementById('package-rate-table-template');
-  const packageRatePdfMobileTemplate = document.getElementById('package-rate-pdf-mobile-template');
   const packageDetailMobileViewport = window.matchMedia('(max-width: 720px)');
   const defaultPackagePageTitle = document.title;
 
@@ -698,36 +697,19 @@ if (packageDetailStacks.length) {
       }
     };
 
-    if (packageRateTemplate || packageRatePdfMobileTemplate) {
+    if (packageRateTemplate) {
       packageCards.forEach((card) => {
         const detailContent = card.querySelector('.package-detail-content');
         const noteGrid = detailContent?.querySelector('.package-note-grid');
-        let rateBlockEl = detailContent?.querySelector('.package-rate-block') || null;
 
-        if (!detailContent) return;
+        if (!(detailContent && !detailContent.querySelector('.package-rate-block'))) return;
 
-        if (packageRateTemplate && !rateBlockEl) {
-          const rateBlock = packageRateTemplate.content.cloneNode(true);
+        const rateBlock = packageRateTemplate.content.cloneNode(true);
 
-          if (noteGrid) {
-            noteGrid.after(rateBlock);
-          } else {
-            detailContent.append(rateBlock);
-          }
-
-          rateBlockEl = detailContent.querySelector('.package-rate-block');
-        }
-
-        if (packageRatePdfMobileTemplate && !detailContent.querySelector('.package-rate-mobile-card')) {
-          const ratePdfMobileBlock = packageRatePdfMobileTemplate.content.cloneNode(true);
-
-          if (rateBlockEl) {
-            rateBlockEl.after(ratePdfMobileBlock);
-          } else if (noteGrid) {
-            noteGrid.after(ratePdfMobileBlock);
-          } else {
-            detailContent.append(ratePdfMobileBlock);
-          }
+        if (noteGrid) {
+          noteGrid.after(rateBlock);
+        } else {
+          detailContent.append(rateBlock);
         }
       });
     }
