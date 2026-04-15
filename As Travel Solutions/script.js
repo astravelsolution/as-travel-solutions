@@ -490,7 +490,8 @@ contactRedirectButtons.forEach((button) => {
 
 const packageDrawer = document.querySelector('[data-package-drawer]');
 if (packageDrawer) {
-  const packageDrawerViewport = window.matchMedia('(min-width: 981px)');
+  const packageDrawerDesktopViewport = window.matchMedia('(min-width: 981px)');
+  const packageDrawerMobileViewport = window.matchMedia('(max-width: 980px)');
   const packageDrawerPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const packageLauncherCards = Array.from(
     document.querySelectorAll('.package-browser .package-overview-card[href*="package-details.html#details-"]')
@@ -504,7 +505,8 @@ if (packageDrawer) {
   let activeDrawerPackageId = '';
   let lastDrawerTrigger = null;
 
-  const shouldUsePackageDrawer = () => packageDrawerViewport.matches && packageDrawerPointer.matches;
+  const shouldUsePackageDrawer = () =>
+    packageDrawerMobileViewport.matches || (packageDrawerDesktopViewport.matches && packageDrawerPointer.matches);
   const getPackageDetailsUrl = (packageId) => `package-details.html#${packageId}`;
 
   const getPackageCardById = (packageId) =>
@@ -670,48 +672,83 @@ if (packageDrawer) {
 const packageDetailStacks = document.querySelectorAll('[data-package-detail-stack]');
 if (packageDetailStacks.length) {
   const packageRateTemplate = document.getElementById('package-rate-table-template');
+  const packageRatePdfMobileTemplate = document.getElementById('package-rate-pdf-mobile-template');
+  const packageDetailMobileViewport = window.matchMedia('(max-width: 720px)');
+  const defaultPackagePageTitle = document.title;
 
   packageDetailStacks.forEach((stack) => {
+    const packageSection = stack.closest('.package-detail-section');
     const packageCards = Array.from(stack.querySelectorAll('.package-detail-card[id]'));
-    const packageNavLinks = Array.from(document.querySelectorAll('[data-package-link]'));
+    const packageNav = packageSection?.querySelector('[data-package-chip-nav]');
+    const packageNavLinks = Array.from(packageNav?.querySelectorAll('[data-package-link]') || []);
+    const packageCloseButton = packageNav?.querySelector('[data-package-close]');
     const defaultCard = packageCards[0];
     let isInitialPackageSync = true;
 
     if (!defaultCard) return;
 
-    if (packageRateTemplate) {
+    const shouldUseMobilePackagePicker = () => packageDetailMobileViewport.matches && !isEmbeddedPackagePage;
+    const getBasePackagePageUrl = () => `${window.location.pathname}${window.location.search}`;
+    const updatePackageHash = (packageId = '') => {
+      const nextUrl = packageId ? `${getBasePackagePageUrl()}#${packageId}` : getBasePackagePageUrl();
+      const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+
+      if (currentUrl !== nextUrl) {
+        window.history.replaceState(null, '', nextUrl);
+      }
+    };
+
+    if (packageRateTemplate || packageRatePdfMobileTemplate) {
       packageCards.forEach((card) => {
         const detailContent = card.querySelector('.package-detail-content');
         const noteGrid = detailContent?.querySelector('.package-note-grid');
+        let rateBlockEl = detailContent?.querySelector('.package-rate-block') || null;
 
-        if (!(detailContent && !detailContent.querySelector('.package-rate-block'))) return;
+        if (!detailContent) return;
 
-        const rateBlock = packageRateTemplate.content.cloneNode(true);
+        if (packageRateTemplate && !rateBlockEl) {
+          const rateBlock = packageRateTemplate.content.cloneNode(true);
 
-        if (noteGrid) {
-          noteGrid.after(rateBlock);
-        } else {
-          detailContent.append(rateBlock);
+          if (noteGrid) {
+            noteGrid.after(rateBlock);
+          } else {
+            detailContent.append(rateBlock);
+          }
+
+          rateBlockEl = detailContent.querySelector('.package-rate-block');
+        }
+
+        if (packageRatePdfMobileTemplate && !detailContent.querySelector('.package-rate-mobile-card')) {
+          const ratePdfMobileBlock = packageRatePdfMobileTemplate.content.cloneNode(true);
+
+          if (rateBlockEl) {
+            rateBlockEl.after(ratePdfMobileBlock);
+          } else if (noteGrid) {
+            noteGrid.after(ratePdfMobileBlock);
+          } else {
+            detailContent.append(ratePdfMobileBlock);
+          }
         }
       });
     }
 
     const syncActivePackageCard = () => {
       const requestedId = decodeURIComponent(window.location.hash.replace('#', '').trim());
-      const activeCard = packageCards.find((card) => card.id === requestedId) || defaultCard;
+      const matchedCard = packageCards.find((card) => card.id === requestedId) || null;
+      const activeCard = matchedCard || (shouldUseMobilePackagePicker() && !requestedId ? null : defaultCard);
+      const hasActiveCard = Boolean(activeCard);
 
       stack.classList.add('is-controlled');
+      stack.classList.toggle('is-empty', !hasActiveCard);
 
       packageCards.forEach((card) => {
-        const isActive = card === activeCard;
+        const isActive = hasActiveCard && card === activeCard;
         card.classList.toggle('is-active', isActive);
-        if (isActive) {
-          card.classList.add('is-visible');
-        }
+        card.classList.toggle('is-visible', isActive);
       });
 
       packageNavLinks.forEach((link) => {
-        const isActive = link.dataset.packageLink === activeCard.id;
+        const isActive = hasActiveCard && link.dataset.packageLink === activeCard.id;
         link.classList.toggle('is-active', isActive);
         if (isActive) {
           link.setAttribute('aria-current', 'page');
@@ -720,13 +757,31 @@ if (packageDetailStacks.length) {
         }
       });
 
+      const isMobileCollapsed = shouldUseMobilePackagePicker() && hasActiveCard;
+      packageNav?.classList.toggle('is-mobile-collapsed', isMobileCollapsed);
+
+      if (packageCloseButton) {
+        packageCloseButton.hidden = !isMobileCollapsed;
+      }
+
+      if (!hasActiveCard) {
+        document.title = defaultPackagePageTitle;
+
+        if (isEmbeddedPackagePage) {
+          requestAnimationFrame(notifyEmbeddedPackageHeight);
+        }
+
+        isInitialPackageSync = false;
+        return;
+      }
+
       const activeTitle = activeCard.querySelector('h2')?.textContent?.trim();
       if (activeTitle) {
         document.title = `${activeTitle} | A S Travel Solution`;
       }
 
       if (window.location.hash.replace('#', '') !== activeCard.id) {
-        window.history.replaceState(null, '', `#${activeCard.id}`);
+        updatePackageHash(activeCard.id);
       }
 
       requestAnimationFrame(() => {
@@ -744,7 +799,102 @@ if (packageDetailStacks.length) {
     };
 
     window.addEventListener('hashchange', syncActivePackageCard);
+    packageDetailMobileViewport.addEventListener('change', syncActivePackageCard);
+
+    if (packageCloseButton) {
+      packageCloseButton.addEventListener('click', () => {
+        updatePackageHash();
+        syncActivePackageCard();
+      });
+    }
+
     syncActivePackageCard();
+  });
+}
+
+const packageRatePdfModal = document.querySelector('[data-package-rate-pdf-modal]');
+if (packageRatePdfModal) {
+  const packageRatePdfFrame = packageRatePdfModal.querySelector('[data-package-rate-pdf-frame]');
+  const packageRatePdfCloseTriggers = Array.from(
+    packageRatePdfModal.querySelectorAll('[data-package-rate-pdf-close]')
+  );
+  const packageRatePdfMobileViewport = window.matchMedia('(max-width: 720px)');
+  const packageRatePdfSrc = packageRatePdfModal.getAttribute('data-package-rate-pdf-src') || '';
+  let isPackageRatePdfOpen = false;
+
+  const openPackageRatePdfModal = () => {
+    if (!packageRatePdfMobileViewport.matches || !packageRatePdfFrame) return;
+
+    if (packageRatePdfSrc && packageRatePdfFrame.getAttribute('src') !== packageRatePdfSrc) {
+      packageRatePdfFrame.setAttribute('src', packageRatePdfSrc);
+    }
+
+    packageRatePdfModal.hidden = false;
+    packageRatePdfModal.setAttribute('aria-hidden', 'false');
+    body.classList.add('package-rate-pdf-open');
+
+    requestAnimationFrame(() => {
+      packageRatePdfModal.classList.add('is-open');
+    });
+
+    isPackageRatePdfOpen = true;
+  };
+
+  const closePackageRatePdfModal = () => {
+    if (!isPackageRatePdfOpen) return;
+
+    packageRatePdfModal.classList.remove('is-open');
+    packageRatePdfModal.setAttribute('aria-hidden', 'true');
+    body.classList.remove('package-rate-pdf-open');
+
+    window.setTimeout(() => {
+      packageRatePdfModal.hidden = true;
+      packageRatePdfFrame?.removeAttribute('src');
+    }, 220);
+
+    isPackageRatePdfOpen = false;
+  };
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    const openTrigger = event.target.closest('[data-package-rate-pdf-open]');
+    if (openTrigger) {
+      event.preventDefault();
+      openPackageRatePdfModal();
+      return;
+    }
+
+    const closeTrigger = event.target.closest('[data-package-rate-pdf-close]');
+    if (closeTrigger) {
+      event.preventDefault();
+      closePackageRatePdfModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closePackageRatePdfModal();
+    }
+  });
+
+  const handlePackageRatePdfViewportChange = () => {
+    if (!packageRatePdfMobileViewport.matches) {
+      closePackageRatePdfModal();
+    }
+  };
+
+  if (typeof packageRatePdfMobileViewport.addEventListener === 'function') {
+    packageRatePdfMobileViewport.addEventListener('change', handlePackageRatePdfViewportChange);
+  } else if (typeof packageRatePdfMobileViewport.addListener === 'function') {
+    packageRatePdfMobileViewport.addListener(handlePackageRatePdfViewportChange);
+  }
+
+  packageRatePdfCloseTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      closePackageRatePdfModal();
+    });
   });
 }
 

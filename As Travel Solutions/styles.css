@@ -4605,6 +4605,32 @@ figure {
   box-shadow: 0 18px 30px rgba(82, 59, 19, 0.2);
 }
 
+.package-chip-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0;
+  border: 1px solid rgba(140, 106, 47, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 247, 235, 0.96);
+  color: var(--navy);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.package-chip-close:hover,
+.package-chip-close:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(140, 106, 47, 0.4);
+  background: rgba(255, 251, 245, 1);
+  box-shadow: 0 12px 22px rgba(22, 15, 9, 0.08);
+}
+
 @keyframes packageOverviewCardEnter {
   from {
     opacity: 0;
@@ -5149,14 +5175,16 @@ body.package-drawer-open {
 .package-media-frame {
   position: relative;
   margin: 0;
+  overflow: hidden;
+  border-radius: 20px;
 }
 
 .package-media-frame > img {
   width: 100%;
   display: block;
-  height: clamp(220px, 20vw, 280px);
+  aspect-ratio: 16 / 10;
+  height: auto;
   object-fit: cover;
-  border-radius: 20px;
   border: 1px solid rgba(140, 106, 47, 0.14);
   box-shadow: 0 14px 26px rgba(22, 15, 9, 0.08);
 }
@@ -5195,9 +5223,9 @@ body.package-drawer-open {
 
 .package-media-thumb {
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   min-height: 0;
-  border-radius: 0;
+  border-radius: 20px;
   background: none;
   border: 0;
   box-shadow: none;
@@ -5205,9 +5233,9 @@ body.package-drawer-open {
 
 .package-media-thumb img {
   width: 100%;
-  height: clamp(220px, 20vw, 280px);
+  aspect-ratio: 4 / 3;
+  height: auto;
   object-fit: cover;
-  border-radius: 20px;
   border: 1px solid rgba(140, 106, 47, 0.14);
   box-shadow: 0 14px 26px rgba(22, 15, 9, 0.08);
 }
@@ -5351,6 +5379,265 @@ body.package-drawer-open {
   box-shadow: 0 0 0 4px rgba(199, 148, 47, 0.14);
 }
 
+.package-list-emoji li {
+  padding-left: 0;
+}
+
+.package-list-emoji li::before {
+  content: none;
+}
+
+.package-columns p + .package-list,
+.package-note-card p + .package-list,
+.package-columns .package-list + p,
+.package-note-card .package-list + p,
+.package-columns p + p,
+.package-note-card p + p {
+  margin-top: 0.55rem;
+}
+
+.package-detail-card-centered .package-heading-row {
+  justify-content: center;
+}
+
+.package-detail-card-centered .package-heading-row > div {
+  width: 100%;
+  max-width: 56rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.package-detail-card-centered .package-overview-badge {
+  margin-inline: auto;
+}
+
+.package-detail-card-centered .package-heading-row h2 {
+  font-weight: 700;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.package-detail-card-centered .package-lead {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.package-detail-card-centered .package-meta-grid {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  justify-items: center;
+}
+
+.package-detail-card-centered .package-meta-card,
+.package-detail-card-centered .package-meta-card strong,
+.package-detail-card-centered .package-meta-card span,
+.package-detail-card-centered .package-columns h3,
+.package-detail-card-centered .package-note-card h3 {
+  text-align: center;
+  text-wrap: balance;
+}
+
+.package-detail-card-centered .package-columns > div,
+.package-detail-card-centered .package-note-card {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.package-detail-card-centered .package-detail-content > p:not(.package-lead),
+.package-detail-card-centered .package-columns p,
+.package-detail-card-centered .package-note-card p {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.package-detail-card-centered .package-list {
+  width: 100%;
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.package-detail-card-centered .package-list li {
+  text-align: left;
+}
+
+#details-jyotirlinga .package-media-frame > img {
+  object-position: 64% 50%;
+}
+
+#details-shirdi .package-media-frame > img {
+  object-position: 50% 32%;
+}
+
+#details-mumbai .package-media-frame > img {
+  object-position: 40% 84%;
+}
+
+#details-ashtavinayak .package-media-frame > img {
+  object-position: 50% 52%;
+}
+
+#details-mahabaleshwar .package-media-frame > img {
+  object-position: 58% 52%;
+}
+
+#details-tuljapur .package-media-frame > img {
+  object-position: 50% 50%;
+}
+
+#details-bhimashankar .package-media-frame > img {
+  object-position: 54% 48%;
+}
+
+#details-satara .package-media-frame > img {
+  object-position: 50% 50%;
+}
+
+#details-kolhapur .package-media-frame > img {
+  object-position: 52% 40%;
+}
+
+#details-nashik .package-media-frame > img {
+  object-position: center 42%;
+}
+
+#details-mahabaleshwar .package-heading-row {
+  justify-content: center;
+}
+
+#details-mahabaleshwar .package-heading-row > div {
+  width: 100%;
+  text-align: center;
+}
+
+#details-mahabaleshwar .package-overview-badge {
+  margin-inline: auto;
+}
+
+#details-mahabaleshwar .package-heading-row h2 {
+  font-weight: 700;
+  text-align: center;
+}
+
+#details-jyotirlinga .package-heading-row h2 {
+  font-weight: 700;
+}
+
+#details-mumbai .package-heading-row h2 {
+  font-weight: 700;
+}
+
+#details-ashtavinayak .package-heading-row h2 {
+  font-weight: 700;
+}
+
+#details-tuljapur .package-heading-row h2 {
+  font-weight: 700;
+}
+
+#details-tuljapur .package-detail-content p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+#details-shirdi .package-heading-row {
+  justify-content: center;
+}
+
+#details-shirdi .package-heading-row > div {
+  width: 100%;
+  text-align: center;
+}
+
+#details-shirdi .package-overview-badge {
+  margin-inline: auto;
+}
+
+#details-shirdi .package-heading-row h2 {
+  font-weight: 700;
+  text-align: center;
+}
+
+#details-shirdi .package-meta-grid {
+  justify-items: center;
+}
+
+#details-shirdi .package-columns > div,
+#details-shirdi .package-note-card {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+#details-shirdi .package-meta-card,
+#details-shirdi .package-meta-card strong,
+#details-shirdi .package-meta-card span,
+#details-shirdi .package-columns h3,
+#details-shirdi .package-note-card h3 {
+  text-align: center;
+}
+
+#details-shirdi .package-detail-content p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+#details-shirdi .package-list {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+#details-shirdi .package-list li {
+  text-align: left;
+}
+
+#details-mahabaleshwar .package-meta-grid {
+  justify-items: center;
+}
+
+#details-mahabaleshwar .package-columns > div,
+#details-mahabaleshwar .package-note-card {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+#details-mahabaleshwar .package-meta-card,
+#details-mahabaleshwar .package-meta-card strong,
+#details-mahabaleshwar .package-meta-card span,
+#details-mahabaleshwar .package-columns h3,
+#details-mahabaleshwar .package-note-card h3 {
+  text-align: center;
+}
+
+#details-mahabaleshwar.package-detail-card-centered .package-detail-content p {
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+#details-mahabaleshwar .package-list {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+#details-mahabaleshwar .package-list li {
+  text-align: left;
+}
+
 .package-note-grid,
 .package-faq-grid {
   display: grid;
@@ -5458,6 +5745,169 @@ body.package-drawer-open {
   color: var(--red);
 }
 
+.package-rate-mobile-card {
+  display: none;
+  gap: 0.85rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(140, 106, 47, 0.14);
+}
+
+.package-rate-mobile-copy {
+  display: grid;
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.package-rate-mobile-eyebrow {
+  margin: 0;
+  color: var(--red);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.package-rate-mobile-title {
+  margin: 0;
+  color: var(--navy);
+  font-size: 1.02rem;
+}
+
+.package-rate-mobile-text {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.package-rate-mobile-button {
+  justify-self: center;
+  min-width: 7.5rem;
+}
+
+.package-rate-pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  display: grid;
+  align-items: end;
+  padding: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.package-rate-pdf-modal[hidden] {
+  display: none;
+}
+
+.package-rate-pdf-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.package-rate-pdf-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 15, 10, 0.7);
+}
+
+.package-rate-pdf-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: min(92dvh, 56rem);
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(250, 244, 232, 0.98));
+  border-radius: 28px;
+  box-shadow: 0 28px 60px rgba(18, 15, 10, 0.24);
+  overflow: hidden;
+  transform: translateY(18px);
+  transition: transform 0.22s ease;
+}
+
+.package-rate-pdf-modal.is-open .package-rate-pdf-panel {
+  transform: translateY(0);
+}
+
+.package-rate-pdf-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 0.85rem;
+}
+
+.package-rate-pdf-eyebrow {
+  margin: 0;
+  color: var(--red);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.package-rate-pdf-header h2 {
+  margin: 0.35rem 0 0;
+  color: var(--navy);
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.1rem, 3vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.package-rate-pdf-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid rgba(140, 106, 47, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--navy);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.package-rate-pdf-close:hover,
+.package-rate-pdf-close:focus-visible {
+  background: var(--red);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.package-rate-pdf-body {
+  display: grid;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+  padding: 0 1rem 1rem;
+}
+
+.package-rate-pdf-frame {
+  width: 100%;
+  height: 100%;
+  min-height: 26rem;
+  border: 1px solid rgba(140, 106, 47, 0.16);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.package-rate-pdf-fallback {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.package-rate-pdf-fallback a {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+body.package-rate-pdf-open {
+  overflow: hidden;
+}
+
 .package-detail-page.is-embedded {
   background: transparent;
 }
@@ -5558,6 +6008,18 @@ body.package-drawer-open {
     grid-template-columns: 1fr;
   }
 
+  .package-media-strip {
+    display: none;
+  }
+
+  .package-rate-block {
+    display: none;
+  }
+
+  .package-rate-mobile-card {
+    display: grid;
+  }
+
   .package-drawer-shell {
     padding: 0.45rem;
   }
@@ -5578,80 +6040,30 @@ body.package-drawer-open {
 
   .package-rate-table-wrap {
     margin: 0;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     border-radius: 18px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .package-rate-table {
-    display: block;
-    min-width: 0;
+    min-width: 760px;
   }
 
-  .package-rate-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+  .package-rate-table th,
+  .package-rate-table td {
+    padding: 0.8rem 0.85rem;
+    font-size: 0.9rem;
     white-space: nowrap;
-    border: 0;
-  }
-
-  .package-rate-table tbody {
-    display: grid;
-    gap: 0.85rem;
-    padding: 0.85rem;
-  }
-
-  .package-rate-table tbody tr {
-    display: grid;
-    border: 1px solid rgba(140, 106, 47, 0.16);
-    border-radius: 16px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 10px 24px rgba(22, 15, 9, 0.07);
-  }
-
-  .package-rate-table tbody tr > * {
-    display: grid;
-    grid-template-columns: minmax(108px, 42%) minmax(0, 1fr);
-    gap: 0.65rem;
-    padding: 0.8rem 0.9rem;
-    border-right: 0;
-    border-bottom: 1px solid rgba(140, 106, 47, 0.14);
-    text-align: left;
-    font-size: 0.92rem;
-    line-height: 1.45;
-  }
-
-  .package-rate-table tbody tr > :last-child {
-    border-bottom: 0;
-  }
-
-  .package-rate-table tbody th {
-    color: var(--navy);
-    text-transform: none;
-  }
-
-  .package-rate-table tbody th::before,
-  .package-rate-table tbody td::before {
-    content: attr(data-label);
-    color: var(--navy);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
   }
 
   .package-rate-call {
-    width: fit-content;
+    white-space: nowrap;
   }
 
   .package-media-frame > img,
   .package-media-thumb img {
-    height: 220px;
+    aspect-ratio: 4 / 3;
   }
 
   .package-overview-card h3 {
@@ -5668,6 +6080,47 @@ body.package-drawer-open {
     width: fit-content;
   }
 
+  .package-detail-card-centered .package-heading-row > div,
+  .package-detail-card-centered .package-meta-grid,
+  .package-detail-card-centered .package-columns > div,
+  .package-detail-card-centered .package-note-card,
+  .package-detail-card-centered .package-detail-content > p,
+  .package-detail-card-centered .package-columns p,
+  .package-detail-card-centered .package-note-card p,
+  .package-detail-card-centered .package-list {
+    max-width: none;
+  }
+
+  .package-detail-card-centered .package-heading-row h2 {
+    font-size: clamp(1.45rem, 6.5vw, 1.9rem);
+  }
+
+  .package-detail-card-centered .package-detail-content {
+    gap: 0.9rem;
+  }
+
+  .package-rate-pdf-modal {
+    align-items: stretch;
+    padding: 0.35rem;
+  }
+
+  .package-rate-pdf-panel {
+    min-height: calc(100dvh - 0.7rem);
+    border-radius: 24px;
+  }
+
+  .package-rate-pdf-header {
+    padding: 0.9rem 0.9rem 0.8rem;
+  }
+
+  .package-rate-pdf-body {
+    padding: 0 0.9rem 0.9rem;
+  }
+
+  .package-rate-pdf-frame {
+    min-height: 0;
+  }
+
   .package-chip-nav {
     gap: 0.6rem;
   }
@@ -5675,6 +6128,34 @@ body.package-drawer-open {
   .package-chip-nav a {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .package-chip-nav.is-mobile-collapsed {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .package-chip-nav.is-mobile-collapsed a {
+    display: none;
+  }
+
+  .package-chip-nav.is-mobile-collapsed a.is-active,
+  .package-chip-nav.is-mobile-collapsed a[aria-current="page"] {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  #details-mahabaleshwar .package-mobile-justify,
+  #details-jyotirlinga .package-mobile-justify {
+    text-align: justify;
+    text-align-last: left;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+
+  .package-chip-nav.is-mobile-collapsed .package-chip-close {
+    display: inline-flex;
   }
 }
 
