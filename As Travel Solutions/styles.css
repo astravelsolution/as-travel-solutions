@@ -5109,8 +5109,9 @@ figure {
 }
 
 .package-drawer-frame {
+  display: block;
   width: 100%;
-  min-height: 520px;
+  min-height: 320px;
   border: 0;
   background: transparent;
 }
@@ -5175,16 +5176,19 @@ body.package-drawer-open {
 .package-media-frame {
   position: relative;
   margin: 0;
+  min-height: 0;
   overflow: hidden;
   border-radius: 20px;
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.82);
 }
 
 .package-media-frame > img {
   width: 100%;
   display: block;
-  aspect-ratio: 16 / 10;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   border: 1px solid rgba(140, 106, 47, 0.14);
   box-shadow: 0 14px 26px rgba(22, 15, 9, 0.08);
 }
@@ -5226,16 +5230,17 @@ body.package-drawer-open {
   overflow: hidden;
   min-height: 0;
   border-radius: 20px;
-  background: none;
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.82);
   border: 0;
   box-shadow: none;
 }
 
 .package-media-thumb img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  height: auto;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   border: 1px solid rgba(140, 106, 47, 0.14);
   box-shadow: 0 14px 26px rgba(22, 15, 9, 0.08);
 }
@@ -5791,130 +5796,6 @@ body.package-drawer-open {
   margin: 1.25rem auto 0;
 }
 
-.package-rate-pdf-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 1400;
-  display: grid;
-  align-items: end;
-  padding: 0.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
-}
-
-.package-rate-pdf-modal[hidden] {
-  display: none;
-}
-
-.package-rate-pdf-modal.is-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.package-rate-pdf-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(18, 15, 10, 0.7);
-}
-
-.package-rate-pdf-panel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: min(92dvh, 56rem);
-  background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(250, 244, 232, 0.98));
-  border-radius: 28px;
-  box-shadow: 0 28px 60px rgba(18, 15, 10, 0.24);
-  overflow: hidden;
-  transform: translateY(18px);
-  transition: transform 0.22s ease;
-}
-
-.package-rate-pdf-modal.is-open .package-rate-pdf-panel {
-  transform: translateY(0);
-}
-
-.package-rate-pdf-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1rem 0.85rem;
-}
-
-.package-rate-pdf-eyebrow {
-  margin: 0;
-  color: var(--red);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.package-rate-pdf-header h2 {
-  margin: 0.35rem 0 0;
-  color: var(--navy);
-  font-family: "Cinzel", serif;
-  font-size: clamp(1.1rem, 3vw, 1.45rem);
-  line-height: 1.2;
-}
-
-.package-rate-pdf-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid rgba(140, 106, 47, 0.18);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--navy);
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-}
-
-.package-rate-pdf-close:hover,
-.package-rate-pdf-close:focus-visible {
-  background: var(--red);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-.package-rate-pdf-body {
-  display: grid;
-  gap: 0.75rem;
-  flex: 1;
-  min-height: 0;
-  padding: 0 1rem 1rem;
-}
-
-.package-rate-pdf-frame {
-  width: 100%;
-  height: 100%;
-  min-height: 26rem;
-  border: 1px solid rgba(140, 106, 47, 0.16);
-  border-radius: 20px;
-  background: #fff;
-}
-
-.package-rate-pdf-fallback {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  text-align: center;
-}
-
-.package-rate-pdf-fallback a {
-  color: var(--blue);
-  font-weight: 600;
-}
-
-body.package-rate-pdf-open {
-  overflow: hidden;
-}
-
 .package-detail-page.is-embedded {
   background: transparent;
 }
@@ -5922,6 +5803,7 @@ body.package-rate-pdf-open {
 .package-detail-page.is-embedded .topbar,
 .package-detail-page.is-embedded .site-header,
 .package-detail-page.is-embedded .page-hero,
+.package-detail-page.is-embedded .package-browser,
 .package-detail-page.is-embedded .site-footer,
 .package-detail-page.is-embedded .mobile-bottom-nav,
 .package-detail-page.is-embedded .floating-contact-group {
@@ -6108,28 +5990,6 @@ body.package-rate-pdf-open {
 
   .package-detail-card-centered .package-detail-content {
     gap: 0.9rem;
-  }
-
-  .package-rate-pdf-modal {
-    align-items: stretch;
-    padding: 0.35rem;
-  }
-
-  .package-rate-pdf-panel {
-    min-height: calc(100dvh - 0.7rem);
-    border-radius: 24px;
-  }
-
-  .package-rate-pdf-header {
-    padding: 0.9rem 0.9rem 0.8rem;
-  }
-
-  .package-rate-pdf-body {
-    padding: 0 0.9rem 0.9rem;
-  }
-
-  .package-rate-pdf-frame {
-    min-height: 0;
   }
 
   .package-chip-nav {

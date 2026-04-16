@@ -21,9 +21,56 @@ const whatsappNumber = '919764642921';
 const whatsappLinks = document.querySelectorAll('a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]');
 const corporateEmail = 'astravelsolution600@gmail.com';
 const compactNavViewport = window.matchMedia('(max-width: 980px)');
+const defaultWhatsAppMessage = [
+  'Hello A S Travel Solution,',
+  '',
+  'I would like to enquire about your cab and tour package services.',
+  'Please share the available options, pricing, and booking details.',
+  '',
+  'Thank you.',
+].join('\n');
 const isEmbeddedPackagePage =
   body.classList.contains('package-detail-page') &&
   new URLSearchParams(window.location.search).get('embedded') === '1';
+const getVisibleEmbeddedPackageHeight = (rootDocument = document) => {
+  if (!rootDocument?.querySelector) return 0;
+
+  const activeCard =
+    rootDocument.querySelector('.package-detail-card.is-active') ||
+    rootDocument.querySelector('.package-detail-card');
+
+  if (!activeCard) return 0;
+
+  const rootWindow = rootDocument.defaultView;
+  const getDocumentTop = (element) => {
+    const elementRect = element.getBoundingClientRect();
+    const scrollTop =
+      rootWindow?.scrollY ??
+      rootDocument.documentElement?.scrollTop ??
+      rootDocument.body?.scrollTop ??
+      0;
+
+    return elementRect.top + scrollTop;
+  };
+
+  const activeTop = getDocumentTop(activeCard);
+  let visibleBottom = activeTop + activeCard.getBoundingClientRect().height;
+
+  rootDocument.querySelectorAll('.package-rate-mobile-global').forEach((element) => {
+    const computedStyle = rootWindow?.getComputedStyle(element);
+
+    if (!computedStyle || computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
+      return;
+    }
+
+    visibleBottom = Math.max(
+      visibleBottom,
+      getDocumentTop(element) + element.getBoundingClientRect().height
+    );
+  });
+
+  return Math.max(0, Math.ceil(visibleBottom - activeTop + 8));
+};
 const revealSelectors = [
   '.hero-content',
   '.hero-panel',
@@ -58,12 +105,14 @@ if (isEmbeddedPackagePage) {
 const notifyEmbeddedPackageHeight = () => {
   if (!isEmbeddedPackagePage || window.parent === window) return;
 
-  const height = Math.max(
-    document.documentElement?.scrollHeight || 0,
-    document.body?.scrollHeight || 0,
-    document.documentElement?.offsetHeight || 0,
-    document.body?.offsetHeight || 0
-  );
+  const height =
+    getVisibleEmbeddedPackageHeight(document) ||
+    Math.max(
+      document.documentElement?.scrollHeight || 0,
+      document.body?.scrollHeight || 0,
+      document.documentElement?.offsetHeight || 0,
+      document.body?.offsetHeight || 0
+    );
 
   window.parent.postMessage(
     {
@@ -308,10 +357,100 @@ const buildWhatsAppUrl = (message) => {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 };
 
+const buildProfessionalWhatsAppMessage = (intro, followUp) => {
+  return [
+    'Hello A S Travel Solution,',
+    '',
+    intro,
+    followUp,
+    '',
+    'Thank you.',
+  ].join('\n');
+};
+
+const upgradeWhatsAppMessage = (message = '') => {
+  const normalizedMessage = message.trim().replace(/\s+/g, ' ');
+
+  if (!normalizedMessage) {
+    return defaultWhatsAppMessage;
+  }
+
+  if (/^Hello, I want to book a cab with AS Travel Solutions\.?$/i.test(normalizedMessage)) {
+    return buildProfessionalWhatsAppMessage(
+      'I would like to book a cab service.',
+      'Please share the available vehicle options, fare, and booking details.'
+    );
+  }
+
+  if (
+    /^Hello, I have a cab service enquiry for AS Travel Solutions\.?$/i.test(normalizedMessage) ||
+    /^Hello, I have a service enquiry for AS Travel Solutions\.?$/i.test(normalizedMessage)
+  ) {
+    return buildProfessionalWhatsAppMessage(
+      'I would like to enquire about your cab services.',
+      'Please share the available options, pricing, and booking details.'
+    );
+  }
+
+  if (/^Hello, I need a service quote from AS Travel Solutions\.?$/i.test(normalizedMessage)) {
+    return buildProfessionalWhatsAppMessage(
+      'I would like to request a quotation for your cab services.',
+      'Please share the fare, available vehicle options, and booking details.'
+    );
+  }
+
+  if (/^Hello, I need help choosing the right tour package\.?$/i.test(normalizedMessage)) {
+    return buildProfessionalWhatsAppMessage(
+      'I need help selecting the right tour package.',
+      'Please suggest suitable package options, pricing, and inclusions.'
+    );
+  }
+
+  if (/^Hello, I want a quote for a tour package from Pune\.?$/i.test(normalizedMessage)) {
+    return buildProfessionalWhatsAppMessage(
+      'I would like to request a quotation for a tour package from Pune.',
+      'Please share the itinerary options, package pricing, and vehicle details.'
+    );
+  }
+
+  if (/^Hello, I want to book a tour package with AS Travel Solutions\.?$/i.test(normalizedMessage)) {
+    return buildProfessionalWhatsAppMessage(
+      'I would like to enquire about booking a tour package.',
+      'Please share the available package options, pricing, and inclusions.'
+    );
+  }
+
+  const detailsMatch = normalizedMessage.match(/^Hello, I want details for the (.+)\.?$/i);
+  if (detailsMatch) {
+    return buildProfessionalWhatsAppMessage(
+      `I would like more details about the ${detailsMatch[1]}.`,
+      'Please share the fare, vehicle options, itinerary, and availability.'
+    );
+  }
+
+  const destinationEnquiryMatch = normalizedMessage.match(/^Hello, I want to enquire about a cab for (.+)\.?$/i);
+  if (destinationEnquiryMatch) {
+    return buildProfessionalWhatsAppMessage(
+      `I would like to enquire about cab service for ${destinationEnquiryMatch[1]}.`,
+      'Please share the fare, vehicle options, and availability from Pune.'
+    );
+  }
+
+  const bookingMatch = normalizedMessage.match(/^Hello, I want to book (?:(?:a|an)\s+)?(.+)\.?$/i);
+  if (bookingMatch) {
+    return buildProfessionalWhatsAppMessage(
+      `I would like to book ${bookingMatch[1]}.`,
+      'Please share the fare, availability, and booking process.'
+    );
+  }
+
+  return message;
+};
+
 const normalizeWhatsAppHref = (href) => {
   try {
     const url = new URL(href, window.location.href);
-    const message = url.searchParams.get('text');
+    const message = upgradeWhatsAppMessage(url.searchParams.get('text') || defaultWhatsAppMessage);
     const normalizedUrl = new URL(`https://wa.me/${whatsappNumber}`);
 
     if (message) {
@@ -399,30 +538,31 @@ whatsappFormButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const form = button.closest('form');
     if (!form) {
-      window.open(buildWhatsAppUrl('Hello, I want to book a cab with A S Travel Solution.'), '_blank', 'noopener');
+      window.open(buildWhatsAppUrl(defaultWhatsAppMessage), '_blank', 'noopener');
       return;
     }
 
-    const bookingType = {
-      oneway: 'one-way cab',
-      outstation: 'outstation cab',
-      rental: 'rental cab',
-    }[button.dataset.whatsappForm] || 'cab';
+    const bookingIntro = {
+      oneway: 'I would like to request a quotation for a one-way cab service.',
+      outstation: 'I would like to request a quotation for an outstation cab service.',
+      rental: 'I would like to request a quotation for a local rental cab service.',
+    }[button.dataset.whatsappForm] || 'I would like to enquire about your cab services.';
 
     const details = Array.from(form.querySelectorAll('input, select, textarea'))
       .map((field) => {
         const label = getFieldLabel(field);
         const value =
-          field.value.trim() ||
-          ('placeholder' in field ? field.placeholder.trim() : '') ||
-          (field.tagName === 'SELECT' ? field.options[field.selectedIndex]?.text.trim() : '');
+          field.tagName === 'SELECT'
+            ? field.options[field.selectedIndex]?.text.trim() || ''
+            : field.value.trim();
 
         return label && value ? `${label}: ${value}` : '';
       })
       .filter(Boolean);
 
-    const message = [`Hello, I want to book a ${bookingType} with A S Travel Solution.`]
+    const message = ['Hello A S Travel Solution,', '', bookingIntro]
       .concat(details.length ? ['', 'Trip details:', ...details] : [])
+      .concat(['', 'Please share the fare, available vehicle options, and booking details.', '', 'Thank you.'])
       .join('\n');
 
     window.open(buildWhatsAppUrl(message), '_blank', 'noopener');
@@ -623,10 +763,9 @@ if (packageDrawer) {
           frameDocument?.querySelector('.package-detail-card.is-active h2')?.textContent?.trim() ||
           frameDocument?.querySelector('.package-detail-card h2')?.textContent?.trim() ||
           '';
-        nextHeight = Math.max(
-          frameDocument?.documentElement?.scrollHeight || 0,
-          frameDocument?.body?.scrollHeight || 0
-        );
+        nextHeight =
+          getVisibleEmbeddedPackageHeight(frameDocument) ||
+          Math.max(frameDocument?.documentElement?.scrollHeight || 0, frameDocument?.body?.scrollHeight || 0);
       } catch {}
 
       if (nextTitle) {
@@ -634,7 +773,7 @@ if (packageDrawer) {
       }
 
       if (nextHeight) {
-        drawerFrame.style.height = `${Math.max(520, Math.ceil(nextHeight))}px`;
+        drawerFrame.style.height = `${Math.max(320, Math.ceil(nextHeight))}px`;
       }
 
       drawerFrame.hidden = false;
@@ -654,7 +793,7 @@ if (packageDrawer) {
     if (!data || data.type !== 'as-package-embed-height') return;
     if (typeof data.height !== 'number' || !Number.isFinite(data.height)) return;
 
-    drawerFrame.style.height = `${Math.max(520, Math.ceil(data.height))}px`;
+    drawerFrame.style.height = `${Math.max(320, Math.ceil(data.height))}px`;
     drawerFrame.hidden = false;
     drawerState.hidden = true;
   });
@@ -794,88 +933,73 @@ if (packageDetailStacks.length) {
   });
 }
 
-const packageRatePdfModal = document.querySelector('[data-package-rate-pdf-modal]');
-if (packageRatePdfModal) {
-  const packageRatePdfFrame = packageRatePdfModal.querySelector('[data-package-rate-pdf-frame]');
-  const packageRatePdfCloseTriggers = Array.from(
-    packageRatePdfModal.querySelectorAll('[data-package-rate-pdf-close]')
-  );
-  const packageRatePdfMobileViewport = window.matchMedia('(max-width: 720px)');
-  const packageRatePdfSrc = packageRatePdfModal.getAttribute('data-package-rate-pdf-src') || '';
-  let isPackageRatePdfOpen = false;
+const directDownloadLinks = document.querySelectorAll('[data-direct-download]');
+if (directDownloadLinks.length) {
+  const scrollActivePackageToTop = () => {
+    const activePackageCard =
+      document.querySelector('.package-detail-card.is-active') ||
+      document.querySelector('.package-detail-card:target') ||
+      document.querySelector('.package-detail-card');
 
-  const openPackageRatePdfModal = () => {
-    if (!packageRatePdfMobileViewport.matches || !packageRatePdfFrame) return;
-
-    if (packageRatePdfSrc && packageRatePdfFrame.getAttribute('src') !== packageRatePdfSrc) {
-      packageRatePdfFrame.setAttribute('src', packageRatePdfSrc);
-    }
-
-    packageRatePdfModal.hidden = false;
-    packageRatePdfModal.setAttribute('aria-hidden', 'false');
-    body.classList.add('package-rate-pdf-open');
-
-    requestAnimationFrame(() => {
-      packageRatePdfModal.classList.add('is-open');
-    });
-
-    isPackageRatePdfOpen = true;
-  };
-
-  const closePackageRatePdfModal = () => {
-    if (!isPackageRatePdfOpen) return;
-
-    packageRatePdfModal.classList.remove('is-open');
-    packageRatePdfModal.setAttribute('aria-hidden', 'true');
-    body.classList.remove('package-rate-pdf-open');
-
-    window.setTimeout(() => {
-      packageRatePdfModal.hidden = true;
-      packageRatePdfFrame?.removeAttribute('src');
-    }, 220);
-
-    isPackageRatePdfOpen = false;
-  };
-
-  document.addEventListener('click', (event) => {
-    if (!(event.target instanceof Element)) return;
-
-    const openTrigger = event.target.closest('[data-package-rate-pdf-open]');
-    if (openTrigger) {
-      event.preventDefault();
-      openPackageRatePdfModal();
+    if (activePackageCard) {
+      activePackageCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
       return;
     }
 
-    const closeTrigger = event.target.closest('[data-package-rate-pdf-close]');
-    if (closeTrigger) {
-      event.preventDefault();
-      closePackageRatePdfModal();
-    }
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      closePackageRatePdfModal();
-    }
-  });
-
-  const handlePackageRatePdfViewportChange = () => {
-    if (!packageRatePdfMobileViewport.matches) {
-      closePackageRatePdfModal();
-    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
-  if (typeof packageRatePdfMobileViewport.addEventListener === 'function') {
-    packageRatePdfMobileViewport.addEventListener('change', handlePackageRatePdfViewportChange);
-  } else if (typeof packageRatePdfMobileViewport.addListener === 'function') {
-    packageRatePdfMobileViewport.addListener(handlePackageRatePdfViewportChange);
-  }
-
-  packageRatePdfCloseTriggers.forEach((trigger) => {
-    trigger.addEventListener('click', (event) => {
+  directDownloadLinks.forEach((link) => {
+    link.addEventListener('click', async (event) => {
       event.preventDefault();
-      closePackageRatePdfModal();
+
+      const fileHref = link.getAttribute('href');
+      if (!fileHref) return;
+
+      const fileUrl = new URL(fileHref, window.location.href).href;
+      const fileName = link.getAttribute('download') || fileUrl.split('/').pop() || 'download';
+      let downloadUrl = fileUrl;
+      let objectUrl = '';
+
+      try {
+        const response = await fetch(fileUrl, { credentials: 'same-origin' });
+        if (!response.ok) {
+          throw new Error(`Download failed with status ${response.status}`);
+        }
+
+        const fileBlob = await response.blob();
+        objectUrl = URL.createObjectURL(fileBlob);
+        downloadUrl = objectUrl;
+      } catch {}
+
+      const tempLink = document.createElement('a');
+      tempLink.href = downloadUrl;
+      tempLink.download = fileName;
+      tempLink.rel = 'noopener';
+
+      if (!objectUrl) {
+        tempLink.target = '_blank';
+      }
+
+      tempLink.style.display = 'none';
+      document.body.append(tempLink);
+      tempLink.click();
+      tempLink.remove();
+
+      if (objectUrl) {
+        window.setTimeout(() => {
+          URL.revokeObjectURL(objectUrl);
+        }, 1500);
+      }
+
+      window.requestAnimationFrame(scrollActivePackageToTop);
     });
   });
 }
