@@ -5245,6 +5245,75 @@ body.package-drawer-open {
   box-shadow: 0 14px 26px rgba(22, 15, 9, 0.08);
 }
 
+.package-media-mobile-slider {
+  display: none;
+}
+
+.package-media-mobile-track {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(140, 106, 47, 0.14);
+  box-shadow: 0 14px 26px rgba(22, 15, 9, 0.08);
+}
+
+.package-media-mobile-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(8%);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+  pointer-events: none;
+}
+
+.package-media-mobile-slide.is-active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.package-media-mobile-slide img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.package-media-mobile-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.package-media-mobile-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(140, 106, 47, 0.28);
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.package-media-mobile-dot.is-active {
+  width: 1.45rem;
+  background: var(--red);
+}
+
+.package-media-mobile-dot:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
 .package-media-thumb span {
   display: block;
   margin-top: 0.7rem;
@@ -5402,38 +5471,38 @@ body.package-drawer-open {
 }
 
 .package-detail-card-centered .package-heading-row {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .package-detail-card-centered .package-heading-row > div {
   width: 100%;
   max-width: 56rem;
-  margin-inline: auto;
-  text-align: center;
+  margin-inline: 0;
+  text-align: left;
 }
 
 .package-detail-card-centered .package-overview-badge {
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .package-detail-card-centered .package-heading-row h2 {
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   text-wrap: balance;
 }
 
 .package-detail-card-centered .package-lead {
   width: 100%;
   max-width: 52rem;
-  margin-inline: auto;
-  text-align: center;
+  margin-inline: 0;
+  text-align: left;
 }
 
 .package-detail-card-centered .package-meta-grid {
   width: 100%;
   max-width: 52rem;
-  margin-inline: auto;
-  justify-items: center;
+  margin-inline: 0;
+  justify-items: start;
 }
 
 .package-detail-card-centered .package-meta-card,
@@ -5441,7 +5510,7 @@ body.package-drawer-open {
 .package-detail-card-centered .package-meta-card span,
 .package-detail-card-centered .package-columns h3,
 .package-detail-card-centered .package-note-card h3 {
-  text-align: center;
+  text-align: left;
   text-wrap: balance;
 }
 
@@ -5449,7 +5518,7 @@ body.package-drawer-open {
 .package-detail-card-centered .package-note-card {
   width: 100%;
   max-width: 52rem;
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .package-detail-card-centered .package-detail-content > p:not(.package-lead),
@@ -5457,17 +5526,17 @@ body.package-drawer-open {
 .package-detail-card-centered .package-note-card p {
   width: 100%;
   max-width: 52rem;
-  margin-inline: auto;
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
-  hyphens: auto;
+  margin-inline: 0;
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
+  hyphens: none;
 }
 
 .package-detail-card-centered .package-list {
   width: 100%;
   max-width: 42rem;
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .package-detail-card-centered .package-list li {
@@ -5515,21 +5584,21 @@ body.package-drawer-open {
 }
 
 #details-mahabaleshwar .package-heading-row {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 #details-mahabaleshwar .package-heading-row > div {
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
 #details-mahabaleshwar .package-overview-badge {
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 #details-mahabaleshwar .package-heading-row h2 {
   font-weight: 700;
-  text-align: center;
+  text-align: left;
 }
 
 #details-jyotirlinga .package-heading-row h2 {
@@ -5549,32 +5618,32 @@ body.package-drawer-open {
 }
 
 #details-tuljapur .package-detail-content p {
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
+  hyphens: none;
 }
 
 #details-shirdi .package-heading-row {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 #details-shirdi .package-heading-row > div {
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 
 #details-shirdi .package-overview-badge {
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 #details-shirdi .package-heading-row h2 {
   font-weight: 700;
-  text-align: center;
+  text-align: left;
 }
 
 #details-shirdi .package-meta-grid {
-  justify-items: center;
+  justify-items: start;
 }
 
 #details-shirdi .package-columns > div,
@@ -5588,20 +5657,20 @@ body.package-drawer-open {
 #details-shirdi .package-meta-card span,
 #details-shirdi .package-columns h3,
 #details-shirdi .package-note-card h3 {
-  text-align: center;
+  text-align: left;
 }
 
 #details-shirdi .package-detail-content p {
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
+  hyphens: none;
 }
 
 #details-shirdi .package-list {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 #details-shirdi .package-list li {
@@ -5609,7 +5678,7 @@ body.package-drawer-open {
 }
 
 #details-mahabaleshwar .package-meta-grid {
-  justify-items: center;
+  justify-items: start;
 }
 
 #details-mahabaleshwar .package-columns > div,
@@ -5623,20 +5692,20 @@ body.package-drawer-open {
 #details-mahabaleshwar .package-meta-card span,
 #details-mahabaleshwar .package-columns h3,
 #details-mahabaleshwar .package-note-card h3 {
-  text-align: center;
+  text-align: left;
 }
 
 #details-mahabaleshwar.package-detail-card-centered .package-detail-content p {
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
+  text-align-last: auto;
+  text-justify: auto;
+  hyphens: none;
 }
 
 #details-mahabaleshwar .package-list {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 #details-mahabaleshwar .package-list li {
@@ -5676,50 +5745,53 @@ body.package-drawer-open {
 .package-rate-block {
   display: grid;
   gap: 0.9rem;
+  padding-top: 0.35rem;
 }
 
 .package-rate-title {
   margin: 0;
   color: var(--navy);
   font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .package-rate-table-wrap {
   overflow-x: auto;
-  border: 1px solid rgba(140, 106, 47, 0.14);
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 244, 232, 0.9));
-  box-shadow: 0 14px 24px rgba(22, 15, 9, 0.06);
+  overflow-y: hidden;
+  border: 1px solid rgba(33, 24, 16, 0.24);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 20px rgba(22, 15, 9, 0.05);
+  -webkit-overflow-scrolling: touch;
 }
 
 .package-rate-table {
   width: 100%;
-  min-width: 760px;
+  min-width: 820px;
   border-collapse: collapse;
 }
 
 .package-rate-table th,
 .package-rate-table td {
   padding: 0.9rem 1rem;
-  border-bottom: 1px solid rgba(140, 106, 47, 0.14);
-  border-right: 1px solid rgba(140, 106, 47, 0.14);
-  color: var(--muted);
+  border-bottom: 1px solid rgba(33, 24, 16, 0.2);
+  border-right: 1px solid rgba(33, 24, 16, 0.2);
+  color: #221810;
   font-size: 0.95rem;
   text-align: center;
   vertical-align: middle;
 }
 
 .package-rate-table thead th {
-  background: rgba(255, 248, 238, 0.92);
-  color: var(--navy);
+  background: #f6f2eb;
+  color: #221810;
   font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 .package-rate-table tbody th {
-  color: var(--navy);
+  color: #221810;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -5735,65 +5807,24 @@ body.package-drawer-open {
 }
 
 .package-rate-table tbody tr:nth-child(even) {
-  background: rgba(255, 255, 255, 0.62);
+  background: #fcfaf6;
 }
 
 .package-rate-call {
-  color: var(--blue);
+  color: #221810;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 0.12em;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .package-rate-call:hover,
 .package-rate-call:focus-visible {
   color: var(--red);
-}
-
-.package-rate-mobile-card {
-  display: none;
-  gap: 0.85rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(140, 106, 47, 0.14);
-}
-
-.package-rate-mobile-copy {
-  display: grid;
-  gap: 0.3rem;
-  text-align: center;
-}
-
-.package-rate-mobile-eyebrow {
-  margin: 0;
-  color: var(--red);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.package-rate-mobile-title {
-  margin: 0;
-  color: var(--navy);
-  font-size: 1.02rem;
-}
-
-.package-rate-mobile-text {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
-.package-rate-mobile-button {
-  justify-self: center;
-  min-width: 7.5rem;
-}
-
-.package-rate-mobile-global {
-  display: none;
-  width: 100%;
-  max-width: 32rem;
-  margin: 1.25rem auto 0;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 .package-detail-page.is-embedded {
@@ -5897,20 +5928,21 @@ body.package-drawer-open {
     grid-template-columns: 1fr;
   }
 
+  .package-detail-media.has-mobile-slider {
+    display: block;
+  }
+
+  .package-detail-media.has-mobile-slider .package-media-frame,
+  .package-detail-media.has-mobile-slider .package-media-strip {
+    display: none;
+  }
+
+  .package-detail-media.has-mobile-slider .package-media-mobile-slider {
+    display: block;
+  }
+
   .package-media-strip {
     display: none;
-  }
-
-  .package-rate-block {
-    display: none;
-  }
-
-  .package-rate-mobile-card {
-    display: none;
-  }
-
-  .package-rate-mobile-global {
-    display: grid;
   }
 
   .package-drawer-shell {
@@ -5940,7 +5972,7 @@ body.package-drawer-open {
   }
 
   .package-rate-table {
-    min-width: 760px;
+    min-width: 720px;
   }
 
   .package-rate-table th,
@@ -5992,6 +6024,35 @@ body.package-drawer-open {
     gap: 0.9rem;
   }
 
+  .package-detail-card-centered .package-heading-row {
+    justify-content: flex-start;
+  }
+
+  .package-detail-card-centered .package-heading-row > div,
+  .package-detail-card-centered .package-heading-row h2,
+  .package-detail-card-centered .package-lead,
+  .package-detail-card-centered .package-meta-card,
+  .package-detail-card-centered .package-meta-card strong,
+  .package-detail-card-centered .package-meta-card span,
+  .package-detail-card-centered .package-columns h3,
+  .package-detail-card-centered .package-note-card h3,
+  .package-detail-card-centered .package-detail-content > p,
+  .package-detail-card-centered .package-columns p,
+  .package-detail-card-centered .package-note-card p {
+    margin-inline: 0;
+    text-align: left;
+  }
+
+  .package-detail-card-centered .package-overview-badge,
+  .package-detail-card-centered .package-meta-grid,
+  .package-detail-card-centered .package-list {
+    margin-inline: 0;
+  }
+
+  .package-detail-card-centered .package-meta-grid {
+    justify-items: start;
+  }
+
   .package-chip-nav {
     gap: 0.6rem;
   }
@@ -6019,10 +6080,10 @@ body.package-drawer-open {
 
   #details-mahabaleshwar .package-mobile-justify,
   #details-jyotirlinga .package-mobile-justify {
-    text-align: justify;
+    text-align: left;
     text-align-last: left;
-    text-justify: inter-word;
-    hyphens: auto;
+    text-justify: auto;
+    hyphens: none;
   }
 
   .package-chip-nav.is-mobile-collapsed .package-chip-close {

@@ -21,6 +21,8 @@ const whatsappNumber = '919764642921';
 const whatsappLinks = document.querySelectorAll('a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]');
 const corporateEmail = 'astravelsolution600@gmail.com';
 const compactNavViewport = window.matchMedia('(max-width: 980px)');
+const packageDetailMediaCards = document.querySelectorAll('.package-detail-media');
+const packageDetailMediaViewport = window.matchMedia('(max-width: 720px)');
 const defaultWhatsAppMessage = [
   'Hello A S Travel Solution,',
   '',
@@ -54,20 +56,7 @@ const getVisibleEmbeddedPackageHeight = (rootDocument = document) => {
   };
 
   const activeTop = getDocumentTop(activeCard);
-  let visibleBottom = activeTop + activeCard.getBoundingClientRect().height;
-
-  rootDocument.querySelectorAll('.package-rate-mobile-global').forEach((element) => {
-    const computedStyle = rootWindow?.getComputedStyle(element);
-
-    if (!computedStyle || computedStyle.display === 'none' || computedStyle.visibility === 'hidden') {
-      return;
-    }
-
-    visibleBottom = Math.max(
-      visibleBottom,
-      getDocumentTop(element) + element.getBoundingClientRect().height
-    );
-  });
+  const visibleBottom = activeTop + activeCard.getBoundingClientRect().height;
 
   return Math.max(0, Math.ceil(visibleBottom - activeTop + 8));
 };
@@ -132,6 +121,162 @@ if (isEmbeddedPackagePage) {
   window.addEventListener('resize', () => {
     requestAnimationFrame(notifyEmbeddedPackageHeight);
   });
+}
+
+if (packageDetailMediaCards.length) {
+  const packageMediaSliderStates = [];
+  let packageMediaSliderTimer = 0;
+
+  const setActivePackageMediaSlide = (sliderState, nextIndex) => {
+    if (!sliderState.slides.length) return;
+
+    const normalizedIndex =
+      ((nextIndex % sliderState.slides.length) + sliderState.slides.length) % sliderState.slides.length;
+
+    sliderState.activeIndex = normalizedIndex;
+
+    sliderState.slides.forEach((slide, index) => {
+      const isActive = index === normalizedIndex;
+      slide.classList.toggle('is-active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+    });
+
+    sliderState.dots.forEach((dot, index) => {
+      const isActive = index === normalizedIndex;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-pressed', String(isActive));
+    });
+  };
+
+  const isPackageMediaSliderVisible = (sliderState) => {
+    const card = sliderState.media.closest('.package-detail-card');
+
+    if (!packageDetailMediaViewport.matches || document.hidden) return false;
+    if (!sliderState.media.isConnected || sliderState.media.getClientRects().length === 0) return false;
+    if (card && window.getComputedStyle(card).display === 'none') return false;
+
+    return true;
+  };
+
+  const stopPackageMediaSliderTimer = () => {
+    if (!packageMediaSliderTimer) return;
+
+    window.clearInterval(packageMediaSliderTimer);
+    packageMediaSliderTimer = 0;
+  };
+
+  const startPackageMediaSliderTimer = () => {
+    if (packageMediaSliderTimer || !packageDetailMediaViewport.matches || !packageMediaSliderStates.length) {
+      return;
+    }
+
+    packageMediaSliderTimer = window.setInterval(() => {
+      packageMediaSliderStates.forEach((sliderState) => {
+        if (!isPackageMediaSliderVisible(sliderState) || sliderState.slides.length < 2) return;
+
+        setActivePackageMediaSlide(sliderState, sliderState.activeIndex + 1);
+      });
+    }, 3200);
+  };
+
+  const syncPackageMediaSliderTimer = () => {
+    if (!packageDetailMediaViewport.matches) {
+      stopPackageMediaSliderTimer();
+      packageMediaSliderStates.forEach((sliderState) => {
+        setActivePackageMediaSlide(sliderState, 0);
+      });
+      return;
+    }
+
+    startPackageMediaSliderTimer();
+  };
+
+  // Reuse each card's existing three-image gallery as a mobile-only slider.
+  packageDetailMediaCards.forEach((media, mediaIndex) => {
+    const sourceImages = Array.from(media.querySelectorAll('.package-media-frame img, .package-media-thumb img'));
+
+    if (sourceImages.length < 2) return;
+
+    const slider = document.createElement('div');
+    slider.className = 'package-media-mobile-slider';
+    slider.setAttribute('role', 'group');
+    slider.setAttribute('aria-label', `Package photo gallery ${mediaIndex + 1}`);
+
+    const track = document.createElement('div');
+    track.className = 'package-media-mobile-track';
+
+    const dots = document.createElement('div');
+    dots.className = 'package-media-mobile-dots';
+    dots.setAttribute('aria-label', 'Package photo navigation');
+
+    const sliderState = {
+      activeIndex: 0,
+      dots: [],
+      media,
+      slides: [],
+    };
+
+    sourceImages.forEach((image, imageIndex) => {
+      const slide = document.createElement('div');
+      slide.className = 'package-media-mobile-slide';
+
+      const slideImage = image.cloneNode(true);
+      const imageStyles = window.getComputedStyle(image);
+
+      slideImage.style.objectFit = imageStyles.objectFit;
+      slideImage.style.objectPosition = imageStyles.objectPosition;
+
+      slide.append(slideImage);
+      track.append(slide);
+      sliderState.slides.push(slide);
+
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'package-media-mobile-dot';
+      dot.setAttribute('aria-label', `Show photo ${imageIndex + 1}`);
+      dot.addEventListener('click', () => {
+        setActivePackageMediaSlide(sliderState, imageIndex);
+        startPackageMediaSliderTimer();
+      });
+
+      dots.append(dot);
+      sliderState.dots.push(dot);
+    });
+
+    slider.append(track);
+
+    if (sliderState.dots.length > 1) {
+      slider.append(dots);
+    }
+
+    media.prepend(slider);
+    media.classList.add('has-mobile-slider');
+    packageMediaSliderStates.push(sliderState);
+    setActivePackageMediaSlide(sliderState, 0);
+  });
+
+  if (packageMediaSliderStates.length) {
+    syncPackageMediaSliderTimer();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopPackageMediaSliderTimer();
+        return;
+      }
+
+      syncPackageMediaSliderTimer();
+    });
+
+    const handlePackageMediaViewportChange = () => {
+      syncPackageMediaSliderTimer();
+    };
+
+    if (typeof packageDetailMediaViewport.addEventListener === 'function') {
+      packageDetailMediaViewport.addEventListener('change', handlePackageMediaViewportChange);
+    } else if (typeof packageDetailMediaViewport.addListener === 'function') {
+      packageDetailMediaViewport.addListener(handlePackageMediaViewportChange);
+    }
+  }
 }
 
 const setNavOpen = (isOpen) => {
@@ -930,77 +1075,6 @@ if (packageDetailStacks.length) {
     }
 
     syncActivePackageCard();
-  });
-}
-
-const directDownloadLinks = document.querySelectorAll('[data-direct-download]');
-if (directDownloadLinks.length) {
-  const scrollActivePackageToTop = () => {
-    const activePackageCard =
-      document.querySelector('.package-detail-card.is-active') ||
-      document.querySelector('.package-detail-card:target') ||
-      document.querySelector('.package-detail-card');
-
-    if (activePackageCard) {
-      activePackageCard.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-      return;
-    }
-
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  };
-
-  directDownloadLinks.forEach((link) => {
-    link.addEventListener('click', async (event) => {
-      event.preventDefault();
-
-      const fileHref = link.getAttribute('href');
-      if (!fileHref) return;
-
-      const fileUrl = new URL(fileHref, window.location.href).href;
-      const fileName = link.getAttribute('download') || fileUrl.split('/').pop() || 'download';
-      let downloadUrl = fileUrl;
-      let objectUrl = '';
-
-      try {
-        const response = await fetch(fileUrl, { credentials: 'same-origin' });
-        if (!response.ok) {
-          throw new Error(`Download failed with status ${response.status}`);
-        }
-
-        const fileBlob = await response.blob();
-        objectUrl = URL.createObjectURL(fileBlob);
-        downloadUrl = objectUrl;
-      } catch {}
-
-      const tempLink = document.createElement('a');
-      tempLink.href = downloadUrl;
-      tempLink.download = fileName;
-      tempLink.rel = 'noopener';
-
-      if (!objectUrl) {
-        tempLink.target = '_blank';
-      }
-
-      tempLink.style.display = 'none';
-      document.body.append(tempLink);
-      tempLink.click();
-      tempLink.remove();
-
-      if (objectUrl) {
-        window.setTimeout(() => {
-          URL.revokeObjectURL(objectUrl);
-        }, 1500);
-      }
-
-      window.requestAnimationFrame(scrollActivePackageToTop);
-    });
   });
 }
 
