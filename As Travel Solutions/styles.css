@@ -2021,6 +2021,7 @@ figure {
 .testimonial-author-tag {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.45rem;
   max-width: 100%;
   min-width: 0;
@@ -4059,7 +4060,15 @@ figure {
   }
 
   .topbar-phone {
+    flex-wrap: wrap;
     justify-content: center;
+    row-gap: 0.2rem;
+    column-gap: 0.35rem;
+    white-space: normal;
+  }
+
+  .topbar-phone span[aria-hidden="true"] {
+    display: none;
   }
 
   .topbar .btn-small {
@@ -4293,6 +4302,18 @@ figure {
     width: 100%;
   }
 
+  .ride-link-group-inline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .ride-link-group-inline .ride-link {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+  }
+
   .city-grid {
     grid-template-columns: 1fr;
   }
@@ -4340,6 +4361,12 @@ figure {
   .cta-actions {
     width: 100%;
     flex-direction: column;
+  }
+
+  .highlight-card,
+  .form-card,
+  .map-card {
+    padding: 1.35rem;
   }
 
   .footer-grid {
@@ -4433,7 +4460,9 @@ figure {
   }
 
   .topbar-phone {
+    flex-direction: column;
     justify-content: center;
+    gap: 0.15rem;
   }
 
   .btn-small {
@@ -4453,6 +4482,10 @@ figure {
   .logo-mark {
     width: 52px;
     height: 52px;
+  }
+
+  .logo-text {
+    max-width: 10rem;
   }
 
   .logo-text strong {
@@ -4500,6 +4533,21 @@ figure {
   .page-hero p {
     font-size: 0.96rem;
     line-height: 1.65;
+  }
+
+  .floating-contact-group {
+    right: 0.55rem;
+    bottom: calc(0.55rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .floating-action {
+    width: 42px;
+    height: 42px;
+  }
+
+  .floating-action svg {
+    width: 18px;
+    height: 18px;
   }
 
   .booking-card {
