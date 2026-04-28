@@ -11,11 +11,11 @@ const whatsappFormButtons = document.querySelectorAll('[data-whatsapp-form]');
 const citySelectionButtons = document.querySelectorAll('[data-city-select]');
 const bookingCityFields = document.querySelectorAll('[data-city-field="booking"]');
 const corporateFormButtons = document.querySelectorAll('[data-corporate-form]');
-const contactRedirectButtons = document.querySelectorAll('[data-contact-redirect]');
 const mobileBottomNavLinks = document.querySelectorAll('[data-mobile-nav]');
 const mobileEnquiryMenus = document.querySelectorAll('[data-mobile-enquiry]');
 const floatingContactGroup = document.querySelector('.floating-contact-group');
 const bookingCard = document.querySelector('.booking-card');
+const heroSection = document.querySelector('.hero, .page-hero');
 const yearEl = document.getElementById('year');
 const whatsappNumber = '919764642921';
 const whatsappLinks = document.querySelectorAll('a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]');
@@ -445,17 +445,25 @@ if (mobileEnquiryMenus.length) {
   }
 }
 
-if (floatingContactGroup && bookingCard) {
-  const desktopFloatingContacts = window.matchMedia('(min-width: 981px)');
+if (floatingContactGroup) {
   let bookingCardInView = false;
+  let heroSectionInView = false;
 
   const syncFloatingContacts = () => {
-    floatingContactGroup.classList.toggle('is-hidden', desktopFloatingContacts.matches && bookingCardInView);
+    floatingContactGroup.classList.toggle('is-hidden', bookingCardInView || heroSectionInView);
+  };
+
+  const isElementInViewport = (element) => {
+    if (!element) return false;
+
+    const elementBounds = element.getBoundingClientRect();
+
+    return elementBounds.top < window.innerHeight && elementBounds.bottom > 0;
   };
 
   const setInitialFloatingContactsState = () => {
-    const bookingCardBounds = bookingCard.getBoundingClientRect();
-    bookingCardInView = bookingCardBounds.top < window.innerHeight && bookingCardBounds.bottom > 0;
+    bookingCardInView = isElementInViewport(bookingCard);
+    heroSectionInView = isElementInViewport(heroSection);
     syncFloatingContacts();
   };
 
@@ -463,27 +471,38 @@ if (floatingContactGroup && bookingCard) {
 
   if ('IntersectionObserver' in window) {
     const floatingContactObserver = new IntersectionObserver(
-      ([entry]) => {
-        bookingCardInView = entry.isIntersecting;
-        syncFloatingContacts();
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === bookingCard) {
+            bookingCardInView = entry.isIntersecting;
+          }
+
+          if (entry.target === heroSection) {
+            heroSectionInView = entry.isIntersecting;
+          }
+
+          syncFloatingContacts();
+        });
       },
       {
         threshold: 0.15,
       }
     );
 
-    floatingContactObserver.observe(bookingCard);
+    if (bookingCard) {
+      floatingContactObserver.observe(bookingCard);
+    }
+
+    if (heroSection) {
+      floatingContactObserver.observe(heroSection);
+    }
   }
 
   const handleFloatingContactsViewportChange = () => {
     setInitialFloatingContactsState();
   };
 
-  if (typeof desktopFloatingContacts.addEventListener === 'function') {
-    desktopFloatingContacts.addEventListener('change', handleFloatingContactsViewportChange);
-  } else if (typeof desktopFloatingContacts.addListener === 'function') {
-    desktopFloatingContacts.addListener(handleFloatingContactsViewportChange);
-  }
+  window.addEventListener('resize', handleFloatingContactsViewportChange);
 }
 
 const setActiveBookingTab = (target) => {
@@ -762,14 +781,6 @@ corporateFormButtons.forEach((button) => {
       .join('\n');
 
     window.location.href = buildMailtoUrl(corporateEmail, subject, body);
-  });
-});
-
-contactRedirectButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const targetUrl = button.getAttribute('href');
-    if (!targetUrl) return;
-    window.location.href = targetUrl;
   });
 });
 
