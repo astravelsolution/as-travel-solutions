@@ -17,23 +17,48 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
+      - name: Check whether GitHub Pages is enabled
+        id: pages
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            try {
+              await github.rest.repos.getPages({ owner, repo });
+              core.info("GitHub Pages is enabled for this repository.");
+              core.setOutput("enabled", "true");
+            } catch (error) {
+              if (error.status === 404) {
+                core.warning("GitHub Pages is not enabled; skipping Pages deploy steps.");
+                core.setOutput("enabled", "false");
+              } else {
+                throw error;
+              }
+            }
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        if: steps.pages.outputs.enabled == 'true'
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4
+        if: steps.pages.outputs.enabled == 'true'
         with:
           path: "./As Travel Solutions"
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        if: steps.pages.outputs.enabled == 'true'
+
+      - name: Skip note
+        if: steps.pages.outputs.enabled != 'true'
+        run: echo "GitHub Pages not enabled for this repo. Workflow skipped successfully."
