@@ -24,13 +24,19 @@ const compactNavViewport = window.matchMedia('(max-width: 980px)');
 const packageDetailMediaCards = document.querySelectorAll('.package-detail-media');
 const packageDetailMediaViewport = window.matchMedia('(max-width: 720px)');
 window.gtag_report_conversion = function gtag_report_conversion(url) {
+  let didRedirect = false;
   const callback = function () {
+    if (didRedirect) return;
+    didRedirect = true;
+
     if (typeof url !== 'undefined' && url) {
       window.location = url;
     }
   };
 
   if (typeof window.gtag === 'function') {
+    setTimeout(callback, 1500);
+
     window.gtag('event', 'conversion', {
       send_to: 'AW-17912584624/RSKLCIKvlMccELCzsd1C',
       value: 1.0,
@@ -708,6 +714,11 @@ whatsappLinks.forEach((link) => {
   const href = link.getAttribute('href');
   if (!href) return;
   link.setAttribute('href', normalizeWhatsAppHref(href));
+
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.gtag_report_conversion(link.href);
+  });
 });
 
 bookingShortcuts.forEach((shortcut) => {
@@ -722,7 +733,7 @@ whatsappFormButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const form = button.closest('form');
     if (!form) {
-      window.open(buildWhatsAppUrl(defaultWhatsAppMessage), '_blank', 'noopener');
+      window.gtag_report_conversion(buildWhatsAppUrl(defaultWhatsAppMessage));
       return;
     }
 
@@ -749,7 +760,7 @@ whatsappFormButtons.forEach((button) => {
       .concat(['', 'Please share the fare, available vehicle options, and booking details.', '', 'Thank you.'])
       .join('\n');
 
-    window.open(buildWhatsAppUrl(message), '_blank', 'noopener');
+    window.gtag_report_conversion(buildWhatsAppUrl(message));
   });
 });
 
